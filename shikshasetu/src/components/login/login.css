@@ -1,0 +1,332 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+.app {
+    min-height: 100vh;
+    background: linear-gradient(135deg,
+            #eef2ff,
+            #dbeafe,
+            #f0f9ff);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.4s;
+    overflow: hidden;
+}
+
+.dark {
+    background: linear-gradient(135deg,
+            #0f172a,
+            #111827,
+            #1e293b);
+}
+
+.theme-toggle {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    border: none;
+    background: white;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.theme-toggle:hover {
+    transform: scale(1.1) rotate(15deg);
+}
+
+.dark .theme-toggle {
+    background: #1e293b;
+    color: white;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.auth-container {
+    width: 90%;
+    max-width: 900px;
+    min-height: 520px;
+    display: flex;
+    border-radius: 24px;
+    overflow: hidden;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.auth-left {
+    flex: 1.1;
+    background: linear-gradient(135deg,
+            #4f46e5,
+            #7c3aed);
+    color: white;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.auth-left::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 60%);
+    pointer-events: none;
+}
+
+.auth-left h1 {
+    font-size: 2.8rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    animation: fadeInLeft 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+}
+
+.auth-left p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    max-width: 420px;
+    opacity: 0.9;
+    margin-bottom: 25px;
+    animation: fadeInLeft 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+}
+
+.features {
+    display: grid;
+    gap: 12px;
+    animation: fadeInLeft 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
+}
+
+.feature-card {
+    padding: 14px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-size: 0.9rem;
+}
+
+.feature-card:hover {
+    transform: translateX(8px) scale(1.02);
+    background: rgba(255, 255, 255, 0.18);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+}
+
+.auth-right {
+    flex: 0.9;
+    background: rgba(255, 255, 255, 0.95);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    position: relative;
+}
+
+.dark .auth-right {
+    background: rgba(15, 23, 42, 0.98);
+}
+
+.form-box {
+    width: 100%;
+    max-width: 340px;
+    animation: fadeInRight 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+}
+
+.form-box h2 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: #111827;
+    font-weight: 700;
+}
+
+.dark .form-box h2 {
+    color: white;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+input {
+    padding: 12px 14px;
+    border: 2px solid #e5e7eb;
+    border-radius: 10px;
+    outline: none;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+input:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+    transform: translateY(-1px);
+}
+
+.dark input {
+    background: #1e293b;
+    color: white;
+    border-color: #334155;
+}
+
+.dark input:focus {
+    border-color: #818cf8;
+    box-shadow: 0 0 0 4px rgba(129, 140, 248, 0.2);
+}
+
+.submit-btn {
+    margin-top: 5px;
+    padding: 12px 14px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg,
+            #4f46e5,
+            #7c3aed);
+    color: white;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
+}
+
+.submit-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(79, 70, 229, 0.35);
+}
+
+.submit-btn:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.submit-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.switch-text {
+    margin-top: 15px;
+    text-align: center;
+    color: #6b7280;
+    font-size: 0.85rem;
+}
+
+.dark .switch-text {
+    color: #cbd5e1;
+}
+
+.switch-text span {
+    color: #4f46e5;
+    cursor: pointer;
+    font-weight: 600;
+    transition: color 0.2s ease;
+}
+
+.switch-text span:hover {
+    color: #7c3aed;
+    text-decoration: underline;
+}
+
+.message-box {
+    padding: 10px 14px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    animation: fadeInUp 0.4s ease;
+}
+
+.message-box.success {
+    background-color: #d1fae5;
+    color: #065f46;
+    border: 1px solid #a7f3d0;
+}
+
+.message-box.error {
+    background-color: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+}
+
+@media (max-width: 768px) {
+    .auth-container {
+        flex-direction: column;
+        min-height: auto;
+        max-width: 450px;
+    }
+
+    .auth-left {
+        text-align: center;
+        padding: 30px 20px;
+    }
+
+    .auth-left h1 {
+        font-size: 2.2rem;
+    }
+
+    .auth-left p {
+        margin: 0 auto 15px;
+    }
+
+    .features {
+        display: none;
+    }
+
+    .auth-right {
+        padding: 30px 20px;
+    }
+}
