@@ -77,8 +77,12 @@ WSGI_APPLICATION = 'shikshasetu_project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'VarunBhoi@2711',
+        'HOST': 'db.ubojazlxquvreaexiddi.supabase.co',
+        'PORT': '5432',
     }
 }
 

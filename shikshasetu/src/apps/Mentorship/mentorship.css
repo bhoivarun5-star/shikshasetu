@@ -1,0 +1,280 @@
+/* Mentorship Module Styling */
+
+.mentorship-view-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.booking-success-alert-card {
+    display: flex;
+    gap: 1.25rem;
+    padding: 1.5rem;
+    background: rgba(16, 185, 129, 0.08);
+    border: 1.5px solid rgba(16, 185, 129, 0.15);
+    border-radius: 20px;
+    color: #065f46;
+    animation: fadeInUp 0.4s ease;
+    align-items: flex-start;
+    position: relative;
+}
+
+.dark-theme .booking-success-alert-card {
+    background: rgba(52, 211, 153, 0.08);
+    border-color: rgba(52, 211, 153, 0.15);
+    color: #a7f3d0;
+}
+
+.success-icon-badge {
+    color: #10b981;
+    flex-shrink: 0;
+}
+
+.success-alert-content {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    text-align: left;
+}
+
+.success-alert-content h3 {
+    font-size: 1.1rem;
+    font-weight: 800;
+    margin: 0;
+}
+
+.success-alert-content p {
+    font-size: 0.9rem;
+    margin: 0;
+    line-height: 1.45;
+}
+
+.video-join-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.8rem;
+    opacity: 0.9;
+    margin-top: 4px;
+    font-weight: 500;
+}
+
+.close-alert-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: inherit;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    padding: 2px;
+}
+
+/* Grid */
+.mentorship-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
+}
+
+/* Mentor Cards */
+.mentor-card-styled {
+    display: flex;
+    flex-direction: column;
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 20px;
+    padding: 1.75rem;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--sh-sm);
+    text-align: left;
+}
+
+.dark-theme .mentor-card-styled {
+    background: rgba(21, 29, 48, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.mentor-card-styled:hover {
+    transform: translateY(-5px);
+    border-color: rgba(79, 70, 229, 0.25);
+    box-shadow: var(--sh-md), 0 10px 20px -10px rgba(79, 70, 229, 0.08);
+}
+
+.dark-theme .mentor-card-styled:hover {
+    border-color: rgba(129, 140, 248, 0.25);
+}
+
+.mentor-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1.25rem;
+}
+
+.mentor-avatar-initials {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #0284c7, #0d9488);
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(13, 148, 136, 0.15);
+}
+
+.rating-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    background: rgba(245, 158, 11, 0.08);
+    color: #d97706;
+    border-radius: 100px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    border: 1px solid rgba(245, 158, 11, 0.15);
+}
+
+.dark-theme .rating-pill {
+    background: rgba(251, 191, 36, 0.1);
+    color: #fbbf24;
+    border-color: rgba(251, 191, 36, 0.15);
+}
+
+.mentor-card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 1.25rem;
+}
+
+.mentor-card-body h3 {
+    font-size: 1.2rem;
+    font-weight: 750;
+    color: var(--text-main);
+    margin: 0;
+}
+
+.mentor-role-text {
+    font-size: 0.88rem;
+    color: var(--text-light);
+    margin: 0;
+    line-height: 1.4;
+}
+
+.mentor-domain-tag {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--color-brand);
+    background: rgba(79, 70, 229, 0.06);
+    padding: 4px 10px;
+    border-radius: 100px;
+    width: fit-content;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    margin-top: 4px;
+}
+
+.dark-theme .mentor-domain-tag {
+    background: rgba(129, 140, 248, 0.12);
+}
+
+.mentor-footer-divider {
+    height: 1px;
+    background: var(--border-color);
+    margin-bottom: 1.25rem;
+}
+
+.mentor-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-top: auto;
+}
+
+.reviews-count-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8rem;
+    color: var(--text-light);
+    font-weight: 500;
+}
+
+.book-session-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 10px;
+    background: var(--color-brand);
+    color: #ffffff;
+    font-size: 0.85rem;
+    font-weight: 650;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.book-session-btn:hover {
+    background: var(--color-brand-hover);
+    transform: translateY(-1px);
+}
+
+/* Form Dropdowns inside Scheduler Modals */
+.time-slot-select {
+    padding: 10px 14px;
+    border: 1.5px solid var(--border-color);
+    border-radius: 12px;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    outline: none;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.time-slot-select:focus {
+    border-color: var(--color-brand);
+    background-color: var(--bg-card);
+}
+
+.modal-form textarea {
+    padding: 10px 14px;
+    border: 1.5px solid var(--border-color);
+    border-radius: 12px;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    outline: none;
+    font-size: 0.9rem;
+    resize: none;
+}
+
+.modal-form textarea:focus {
+    border-color: var(--color-brand);
+    background-color: var(--bg-card);
+}
+
+.confirm-booking-btn {
+    padding: 10px 18px;
+    border-radius: 12px;
+    background: var(--color-brand);
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 0.88rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.confirm-booking-btn:hover {
+    background: var(--color-brand-hover);
+}

@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from .models import Profile
+from .models import Profile, CourseVideo, VideoProgress
 
 # Create your views here.
 
@@ -179,4 +179,177 @@ def profile_view(request):
             return JsonResponse({'success': False, 'message': str(e)}, status=500)
             
     return JsonResponse({'success': False, 'message': 'Method not allowed.'}, status=405)
+
+
+@csrf_exempt
+def admin_users_view(request):
+    if request.method == 'GET':
+        users = User.objects.all()
+        user_list = []
+        for u in users:
+            mobile_number = ''
+            bio = ''
+            skills = ''
+            if hasattr(u, 'profile'):
+                mobile_number = u.profile.mobile_number
+                bio = u.profile.bio
+                skills = u.profile.skills
+            user_list.append({
+                'id': u.id,
+                'username': u.username,
+                'email': u.email,
+                'fullName': u.first_name,
+                'mobileNumber': mobile_number,
+                'bio': bio,
+                'skills': skills,
+                'is_superuser': u.is_superuser
+            })
+        return JsonResponse({'success': True, 'users': user_list})
+        
+    elif request.method == 'DELETE':
+        try:
+            user_id = request.GET.get('id')
+            if not user_id:
+                data = json.loads(request.body)
+                user_id = data.get('id')
+            
+            if user_id:
+                user = User.objects.get(id=user_id)
+                user.delete()
+                return JsonResponse({'success': True, 'message': 'User deleted successfully.'})
+            return JsonResponse({'success': False, 'message': 'User ID is required.'}, status=400)
+        except User.DoesNotExist:
+            return JsonResponse({'success': False, 'message': 'User not found.'}, status=404)
+        except Exception as e:
+            return JsonResponse({'success': False, 'message': str(e)}, status=500)
+            
+    return JsonResponse({'success': False, 'message': 'Method not allowed.'}, status=405)
+
+
+@csrf_exempt
+def course_videos_view(request):
+    if not request.user.is_authenticated:
+        return JsonResponse({'success': False, 'message': 'Not authenticated.'}, status=401)
+        
+    if request.method == 'GET':
+        videos = CourseVideo.objects.all().order_by('id')
+        video_list = []
+        for video in videos:
+            progress_entry = VideoProgress.objects.filter(user=request.user, video=video).first()
+            last_position = progress_entry.last_position if progress_entry else 0.0
+            percentage = progress_entry.percentage if progress_entry else 0
+            
+            video_list.append({
+                'id': video.id,
+                'title': video.title,
+                'category': video.category,
+                'video_url': video.video_url,
+                'thumbnail_url': video.thumbnail_url or '',
+                'duration': video.duration,
+                'last_position': last_position,
+                'percentage': percentage,
+                'is_enrolled': progress_entry is not None
+            })
+        return JsonResponse({'success': True, 'videos': video_list})
+        
+    return JsonResponse({'success': False, 'message': 'Method not allowed.'}, status=405)
+
+
+@csrf_exempt
+def video_progress_view(request):
+    if not request.user.is_authenticated:
+        return JsonResponse({'success': False, 'message': 'Not authenticated.'}, status=401)
+        
+    if request.method == 'GET':
+        video_id = request.GET.get('videoId')
+        if not video_id:
+            return JsonResponse({'success': False, 'message': 'Video ID required.'}, status=400)
+            
+        progress = VideoProgress.objects.filter(user=request.user, video_id=video_id).first()
+        return JsonResponse({
+            'success': True,
+            'last_position': progress.last_position if progress else 0.0,
+            'percentage': progress.percentage if progress else 0
+        })
+        
+    elif request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            video_id = data.get('videoId')
+            last_position = float(data.get('lastPosition', 0.0))
+            percentage = int(data.get('percentage', 0))
+            
+            if not video_id:
+                return JsonResponse({'success': False, 'message': 'Video ID is required.'}, status=400)
+                
+            video = CourseVideo.objects.get(id=video_id)
+            progress, created = VideoProgress.objects.get_or_create(user=request.user, video=video)
+            progress.last_position = last_position
+            progress.percentage = percentage
+            progress.save()
+            
+            return JsonResponse({'success': True, 'message': 'Progress updated successfully.'})
+        except CourseVideo.DoesNotExist:
+            return JsonResponse({'success': False, 'message': 'Video not found.'}, status=404)
+        except Exception as e:
+            return JsonResponse({'success': False, 'message': str(e)}, status=500)
+            
+    return JsonResponse({'success': False, 'message': 'Method not allowed.'}, status=405)
+
+
+@csrf_exempt
+def admin_videos_view(request):
+    # Quick bypass or auth check; we will check is_staff / is_superuser
+    if not request.user.is_authenticated or not (request.user.is_staff or request.user.is_superuser):
+        return JsonResponse({'success': False, 'message': 'Admin authorization required.'}, status=403)
+        
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            title = data.get('title')
+            category = data.get('category')
+            video_url = data.get('videoUrl')
+            thumbnail_url = data.get('thumbnailUrl', '')
+            duration = data.get('duration', '00:00')
+            
+            if not title or not category or not video_url:
+                return JsonResponse({'success': False, 'message': 'Title, category, and video URL are required.'}, status=400)
+                
+            video = CourseVideo.objects.create(
+                title=title,
+                category=category,
+                video_url=video_url,
+                thumbnail_url=thumbnail_url,
+                duration=duration
+            )
+            return JsonResponse({'success': True, 'message': 'Video added successfully.', 'video': {
+                'id': video.id,
+                'title': video.title,
+                'category': video.category,
+                'video_url': video.video_url,
+                'thumbnail_url': video.thumbnail_url or '',
+                'duration': video.duration
+            }})
+        except Exception as e:
+            return JsonResponse({'success': False, 'message': str(e)}, status=500)
+            
+    elif request.method == 'DELETE':
+        try:
+            video_id = request.GET.get('id')
+            if not video_id:
+                data = json.loads(request.body)
+                video_id = data.get('id')
+                
+            if video_id:
+                video = CourseVideo.objects.get(id=video_id)
+                video.delete()
+                return JsonResponse({'success': True, 'message': 'Video deleted successfully.'})
+            return JsonResponse({'success': False, 'message': 'Video ID is required.'}, status=400)
+        except CourseVideo.DoesNotExist:
+            return JsonResponse({'success': False, 'message': 'Video not found.'}, status=404)
+        except Exception as e:
+            return JsonResponse({'success': False, 'message': str(e)}, status=500)
+            
+    return JsonResponse({'success': False, 'message': 'Method not allowed.'}, status=405)
+
 

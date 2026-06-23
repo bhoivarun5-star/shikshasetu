@@ -1,0 +1,21 @@
+/* Scholarship specific */
+.scholarship-card {
+    border-left: 4px solid var(--color-gold);
+}
+
+.price-tag {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--color-brand);
+    margin: 12px 0 6px;
+}
+
+.dark-theme .price-tag {
+    color: #818cf8;
+}
+
+.card-desc {
+    font-size: 0.88rem;
+    color: var(--text-light);
+    line-height: 1.5;
+}
