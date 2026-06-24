@@ -29,10 +29,40 @@ export default function Learning({ learningSubTab, setLearningSubTab, t = (k, fa
     const [enrollingVideo, setEnrollingVideo] = useState(null);
     const [videoSearchQuery, setVideoSearchQuery] = useState("");
 
-    const filteredVideoLectures = videoLectures.filter(video => 
-        video.title.toLowerCase().includes(videoSearchQuery.toLowerCase()) ||
-        (video.category && video.category.toLowerCase().includes(videoSearchQuery.toLowerCase()))
-    );
+    const SEARCH_RELATION_GROUPS = [
+        ["python", "django", "flask", "backend", "web development"],
+        ["react", "mern", "javascript", "js", "node", "express", "mongodb", "frontend"],
+        ["devops", "devop", "docker", "kubernetes", "aws", "cloud", "git", "ci/cd"],
+        ["sql", "database", "db", "mysql", "postgresql"],
+        ["java", "spring", "spring boot", "oop"],
+    ];
+
+    const getSearchTerms = (queryStr) => {
+        const trimmed = queryStr.trim().toLowerCase();
+        if (!trimmed) return [];
+        
+        const terms = new Set([trimmed]);
+        
+        SEARCH_RELATION_GROUPS.forEach(group => {
+            const hasMatch = group.some(term => trimmed.includes(term) || term.includes(trimmed));
+            if (hasMatch) {
+                group.forEach(t => terms.add(t));
+            }
+        });
+        
+        return Array.from(terms);
+    };
+
+    const searchTerms = getSearchTerms(videoSearchQuery);
+
+    const filteredVideoLectures = videoSearchQuery.trim() === ""
+        ? videoLectures.slice(0, 6)
+        : videoLectures.filter(video => {
+            const titleLower = video.title.toLowerCase();
+            const catLower = video.category ? video.category.toLowerCase() : "";
+            
+            return searchTerms.some(term => titleLower.includes(term) || catLower.includes(term));
+          });
 
     const handleConfirmEnroll = async () => {
         if (!enrollingVideo) return;
@@ -606,7 +636,7 @@ Format the output strictly as a JSON array. Do not wrap the JSON in markdown cod
                                 </div>
                                 <button
                                     type="submit"
-                                    className="explore-search-btn px-6 py-3 bg-[#e8773f] hover:bg-[#d56630] text-white font-semibold rounded-xl flex items-center gap-2"
+                                    className="explore-search-btn px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl flex items-center gap-2"
                                 >
                                     <Search size={16} />
                                     <span>Search</span>
@@ -626,6 +656,8 @@ Format the output strictly as a JSON array. Do not wrap the JSON in markdown cod
                                         <div className="video-thumbnail-container">
                                             {video.thumbnail_url ? (
                                                 <img src={video.thumbnail_url} alt={video.title} />
+                                            ) : getYouTubeId(video.video_url) ? (
+                                                <img src={`https://img.youtube.com/vi/${getYouTubeId(video.video_url)}/hqdefault.jpg`} alt={video.title} />
                                             ) : (
                                                 <div className="flex items-center justify-center h-full w-full bg-slate-900/60">
                                                     <Video size={40} className="text-slate-600" />
