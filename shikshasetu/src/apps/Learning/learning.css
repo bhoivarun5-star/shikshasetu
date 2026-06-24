@@ -649,3 +649,88 @@
 .enroll-modal-buttons .btn-no:hover {
     background: rgba(255, 255, 255, 0.05);
 }
+
+/* Premium Video Search Bar Styles */
+.premium-search-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 380px;
+    display: flex;
+    align-items: center;
+    border-radius: 14px;
+    padding: 2px;
+    background: linear-gradient(135deg, rgba(232, 119, 63, 0.15) 0%, rgba(242, 179, 69, 0.15) 100%);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.03);
+}
+
+.premium-search-wrapper:focus-within {
+    background: linear-gradient(135deg, #e8773f 0%, #f2b345 100%);
+    box-shadow: 0 8px 30px rgba(232, 119, 63, 0.18);
+    transform: translateY(-1px);
+}
+
+.premium-search-inner {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    background: var(--bg-card);
+    border-radius: 12px;
+    padding: 8px 14px;
+    transition: all 0.3s ease;
+}
+
+.dark-theme .premium-search-inner {
+    background: #141b2c;
+}
+
+.premium-search-icon {
+    color: var(--text-light);
+    transition: color 0.3s ease, transform 0.3s ease;
+    margin-right: 8px;
+    flex-shrink: 0;
+}
+
+.premium-search-wrapper:focus-within .premium-search-icon {
+    color: #e8773f;
+    transform: scale(1.08);
+}
+
+.premium-search-input {
+    border: none;
+    background: transparent;
+    outline: none;
+    width: 100%;
+    color: var(--text-main);
+    font-size: 0.88rem;
+    font-weight: 500;
+}
+
+.premium-search-input::placeholder {
+    color: var(--text-light);
+    opacity: 0.7;
+}
+
+.premium-search-clear {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    border-radius: 50%;
+    transition: all 0.2s ease;
+    margin-left: 6px;
+    flex-shrink: 0;
+}
+
+.premium-search-clear:hover {
+    background: rgba(0, 0, 0, 0.05);
+    color: var(--text-main);
+}
+
+.dark-theme .premium-search-clear:hover {
+    background: rgba(255, 255, 255, 0.08);
+}

@@ -584,15 +584,27 @@ Format the output strictly as a JSON array. Do not wrap the JSON in markdown cod
                                         {t("recommended_lectures_desc", "Directly stream course lectures and track your progress in real-time.")}
                                     </p>
                                 </div>
-                                <div className="video-search-bar relative" style={{ width: "100%", maxWidth: "320px" }}>
-                                    <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
-                                    <input
-                                        type="text"
-                                        placeholder={t("search_lectures_placeholder", "Search lectures...")}
-                                        value={videoSearchQuery}
-                                        onChange={(e) => setVideoSearchQuery(e.target.value)}
-                                        className="w-full py-2 pl-10 pr-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-850 dark:text-slate-100 outline-none focus:border-[#e8773f] text-xs transition-all"
-                                    />
+                                <div className="premium-search-wrapper">
+                                    <div className="premium-search-inner">
+                                        <Search className="premium-search-icon" size={16} />
+                                        <input
+                                            type="text"
+                                            placeholder={t("search_lectures_placeholder", "Search lectures...")}
+                                            value={videoSearchQuery}
+                                            onChange={(e) => setVideoSearchQuery(e.target.value)}
+                                            className="premium-search-input"
+                                        />
+                                        {videoSearchQuery && (
+                                            <button
+                                                type="button"
+                                                onClick={() => setVideoSearchQuery("")}
+                                                className="premium-search-clear"
+                                                title="Clear search"
+                                            >
+                                                <X size={14} />
+                                            </button>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
                             
