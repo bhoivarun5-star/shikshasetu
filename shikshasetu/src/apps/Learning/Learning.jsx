@@ -27,6 +27,12 @@ export default function Learning({ learningSubTab, setLearningSubTab, t = (k, fa
     const [selectedVideo, setSelectedVideo] = useState(null);
     const [watchProgressPercent, setWatchProgressPercent] = useState(0);
     const [enrollingVideo, setEnrollingVideo] = useState(null);
+    const [videoSearchQuery, setVideoSearchQuery] = useState("");
+
+    const filteredVideoLectures = videoLectures.filter(video => 
+        video.title.toLowerCase().includes(videoSearchQuery.toLowerCase()) ||
+        (video.category && video.category.toLowerCase().includes(videoSearchQuery.toLowerCase()))
+    );
 
     const handleConfirmEnroll = async () => {
         if (!enrollingVideo) return;
@@ -564,45 +570,34 @@ Format the output strictly as a JSON array. Do not wrap the JSON in markdown cod
 
                 {learningSubTab === "courses" && (
                     <div className="courses-tab-view">
-                        {/* Enrolled Courses */}
-                        <div className="enrolled-courses-section">
-                            <h3 className="text-lg font-bold text-slate-800 dark:text-slate-200">{t("enrolled_courses", "My Enrolled Courses")}</h3>
-                            <div className="content-grid mt-4">
-                                {[
-                                    { title: t("full_stack_course", "Full Stack Web Development"), progress: 68, category: t("engineering", "Engineering"), level: t("intermediate", "Intermediate") },
-                                    { title: t("intro_ml_course", "Introduction to Machine Learning"), progress: 42, category: t("data_science", "Data Science"), level: t("beginner", "Beginner") },
-                                    { title: t("uiux_masterclass", "UI/UX Design Masterclass"), progress: 90, category: t("design", "Design"), level: t("advanced", "Advanced") },
-                                ].map((course, i) => (
-                                    <div key={i} className="content-card">
-                                        <div className="card-badge">{course.category}</div>
-                                        <h3>{course.title}</h3>
-                                        <div className="progress-container">
-                                            <div className="progress-bar-bg">
-                                                <div className="progress-bar-fill" style={{ width: `${course.progress}%` }}></div>
-                                            </div>
-                                            <span>{course.progress}% {t("completed", "Completed")}</span>
-                                        </div>
-                                        <div className="card-footer">
-                                            <span className="card-meta">{course.level}</span>
-                                            <button className="card-btn">{t("continue", "Continue")}</button>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
+
 
                         {/* Recommended Video Lectures */}
                         <div className="lectures-grid-section mt-10">
-                            <h3 className="text-lg font-bold text-slate-800 dark:text-slate-200 flex items-center gap-2">
-                                <Video className="text-[#e8773f]" size={20} />
-                                {t("recommended_lectures_title", "Recommended Video Lectures")}
-                            </h3>
-                            <p className="text-sm text-slate-500 mt-1">
-                                {t("recommended_lectures_desc", "Directly stream course lectures and track your progress in real-time.")}
-                            </p>
+                            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                                <div>
+                                    <h3 className="text-lg font-bold text-slate-800 dark:text-slate-200 flex items-center gap-2">
+                                        <Video className="text-[#e8773f]" size={20} />
+                                        {t("recommended_lectures_title", "Recommended Video Lectures")}
+                                    </h3>
+                                    <p className="text-sm text-slate-500 mt-1">
+                                        {t("recommended_lectures_desc", "Directly stream course lectures and track your progress in real-time.")}
+                                    </p>
+                                </div>
+                                <div className="video-search-bar relative" style={{ width: "100%", maxWidth: "320px" }}>
+                                    <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+                                    <input
+                                        type="text"
+                                        placeholder={t("search_lectures_placeholder", "Search lectures...")}
+                                        value={videoSearchQuery}
+                                        onChange={(e) => setVideoSearchQuery(e.target.value)}
+                                        className="w-full py-2 pl-10 pr-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-850 dark:text-slate-100 outline-none focus:border-[#e8773f] text-xs transition-all"
+                                    />
+                                </div>
+                            </div>
                             
                             <div className="content-grid mt-4">
-                                {videoLectures.map((video) => (
+                                {filteredVideoLectures.map((video) => (
                                     <div key={video.id} className="content-card relative group" style={{ cursor: "pointer" }} onClick={() => {
                                         if (video.is_enrolled) {
                                             setSelectedVideo(video);
@@ -646,9 +641,9 @@ Format the output strictly as a JSON array. Do not wrap the JSON in markdown cod
                                         </div>
                                     </div>
                                 ))}
-                                {videoLectures.length === 0 && (
+                                {filteredVideoLectures.length === 0 && (
                                     <div className="col-span-full text-center py-8 text-slate-500">
-                                        No recommended video lectures uploaded yet.
+                                        {videoSearchQuery ? t("no_matching_lectures", "No lectures match your search query.") : t("no_lectures_yet", "No recommended video lectures uploaded yet.")}
                                     </div>
                                 )}
                             </div>
