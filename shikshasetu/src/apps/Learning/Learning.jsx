@@ -582,34 +582,36 @@ Format the output strictly as a JSON array. Do not wrap the JSON in markdown cod
                                 {t("recommended_lectures_desc", "Directly stream course lectures and track your progress in real-time.")}
                             </p>
 
-                            <div className="flex gap-3 mt-4 mb-6">
-                                <div className="premium-search-wrapper flex-1">
-                                    <div className="premium-search-inner">
-                                        <Search className="premium-search-icon" size={16} />
-                                        <input
-                                            type="text"
-                                            placeholder={t("search_lectures_placeholder", "Search lectures...")}
-                                            value={videoSearchQuery}
-                                            onChange={(e) => setVideoSearchQuery(e.target.value)}
-                                            className="premium-search-input"
-                                        />
-                                        {videoSearchQuery && (
-                                            <button
-                                                type="button"
-                                                onClick={() => setVideoSearchQuery("")}
-                                                className="premium-search-clear"
-                                                title="Clear search"
-                                            >
-                                                <X size={14} />
-                                            </button>
-                                        )}
-                                    </div>
+                            <form onSubmit={(e) => e.preventDefault()} className="explore-search-bar mt-6 flex gap-3">
+                                <div className="explore-input-wrapper relative flex-1">
+                                    <Search className="explore-search-icon absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+                                    <input
+                                        type="text"
+                                        placeholder={t("search_lectures_placeholder", "Search lectures...")}
+                                        value={videoSearchQuery}
+                                        onChange={(e) => setVideoSearchQuery(e.target.value)}
+                                        className="explore-search-input w-full py-3 pl-12 pr-12 rounded-xl border border-slate-200 dark:border-slate-850 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 outline-none focus:border-[#e8773f]"
+                                    />
+                                    {videoSearchQuery && (
+                                        <button
+                                            type="button"
+                                            onClick={() => setVideoSearchQuery("")}
+                                            className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+                                            title="Clear search"
+                                            style={{ background: 'none', border: 'none', cursor: 'pointer' }}
+                                        >
+                                            <X size={16} />
+                                        </button>
+                                    )}
                                 </div>
-                                <button type="button" className="premium-search-btn">
-                                    <Search size={14} />
+                                <button
+                                    type="submit"
+                                    className="explore-search-btn px-6 py-3 bg-[#e8773f] hover:bg-[#d56630] text-white font-semibold rounded-xl flex items-center gap-2"
+                                >
+                                    <Search size={16} />
                                     <span>Search</span>
                                 </button>
-                            </div>
+                            </form>
                             
                             <div className="content-grid mt-4">
                                 {filteredVideoLectures.map((video) => (
