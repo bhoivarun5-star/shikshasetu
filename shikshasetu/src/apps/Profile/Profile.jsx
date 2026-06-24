@@ -89,120 +89,6 @@ export default function Profile({ profileData, setProfileData }) {
             </div>
 
             <div className="profile-dashboard-layout">
-                {/* Editor Settings Form */}
-                <div className="profile-editor-card">
-                    <form onSubmit={handleProfileSave} className="profile-form-inner">
-                        <AnimatePresence>
-                            {profileSaved && (
-                                <motion.div
-                                    initial={{ opacity: 0, height: 0 }}
-                                    animate={{ opacity: 1, height: "auto", marginBottom: 16 }}
-                                    exit={{ opacity: 0, height: 0 }}
-                                    className="success-alert"
-                                >
-                                    <Check size={16} />
-                                    <span>Changes saved successfully!</span>
-                                </motion.div>
-                            )}
-                        </AnimatePresence>
-
-                        <div className="form-group-editor">
-                            <label>
-                                <User size={14} />
-                                <span>Full Name</span>
-                            </label>
-                            <input
-                                type="text"
-                                value={profileData.name}
-                                onChange={(e) => setProfileData({ ...profileData, name: e.target.value })}
-                                required
-                            />
-                        </div>
-
-                        <div className="form-group-row">
-                            <div className="form-group-editor">
-                                <label>
-                                    <Mail size={14} />
-                                    <span>Email Address</span>
-                                </label>
-                                <input
-                                    type="email"
-                                    value={profileData.email}
-                                    onChange={(e) => setProfileData({ ...profileData, email: e.target.value })}
-                                    required
-                                />
-                            </div>
-
-                            <div className="form-group-editor">
-                                <label>
-                                    <Phone size={14} />
-                                    <span>Phone Number</span>
-                                </label>
-                                <input
-                                    type="tel"
-                                    value={profileData.phone}
-                                    onChange={(e) => setProfileData({ ...profileData, phone: e.target.value })}
-                                />
-                            </div>
-                        </div>
-
-                        <div className="form-group-editor">
-                            <label>
-                                <Info size={14} />
-                                <span>Bio / Professional Summary</span>
-                            </label>
-                            <textarea
-                                rows="4"
-                                value={profileData.bio || ""}
-                                onChange={(e) => setProfileData({ ...profileData, bio: e.target.value })}
-                                placeholder="Tell us about yourself, your career interests, or what you are currently studying..."
-                            ></textarea>
-                        </div>
-
-                        {/* Interactive Skills Tag Appender */}
-                        <div className="skills-tag-editor-section">
-                            <label className="section-label">
-                                <GraduationCap size={14} />
-                                <span>Skills & Competencies</span>
-                            </label>
-
-                            <div className="skills-interactive-chips">
-                                {skillList.map((skill, idx) => (
-                                    <span key={idx} className="interactive-skill-pill">
-                                        <span>{skill}</span>
-                                        <button 
-                                            type="button" 
-                                            onClick={() => handleRemoveSkill(skill)}
-                                            className="remove-skill-btn"
-                                            title="Remove Skill"
-                                        >
-                                            <X size={10} />
-                                        </button>
-                                    </span>
-                                ))}
-                            </div>
-
-                            <div className="add-skill-field-row">
-                                <input
-                                    type="text"
-                                    placeholder="Add a new skill (e.g. Figma, SQL)..."
-                                    value={newSkill}
-                                    onChange={(e) => setNewSkill(e.target.value)}
-                                    className="add-skill-input"
-                                />
-                                <button type="button" onClick={handleAddSkill} className="add-skill-action-btn">
-                                    <Plus size={16} />
-                                    <span>Add</span>
-                                </button>
-                            </div>
-                        </div>
-
-                        <button type="submit" className="save-profile-btn-premium">
-                            <Save size={16} />
-                            <span>Save Profile Changes</span>
-                        </button>
-                    </form>
-                </div>
 
                 {/* Profile Card View */}
                 <div className="profile-preview-card">
@@ -250,12 +136,12 @@ export default function Profile({ profileData, setProfileData }) {
                                     enrolledCourses.map((course) => (
                                         <div key={course.id} style={{ display: "flex", flexDirection: "column", gap: "0.35rem" }}>
                                             <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.82rem", fontWeight: "600" }}>
-                                                <span style={{ color: "rgba(255,255,255,0.9)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "160px" }} title={course.title}>
+                                                <span style={{ color: "var(--text-main)", fontWeight: "650", fontSize: "0.85rem" }} title={course.title}>
                                                     {course.title}
                                                 </span>
                                                 <span style={{ color: "#E8773F" }}>{course.percentage}%</span>
                                             </div>
-                                            <div style={{ height: "6px", background: "rgba(255, 255, 255, 0.08)", borderRadius: "3px", overflow: "hidden", width: "100%" }}>
+                                            <div style={{ height: "6px", background: "var(--border-color)", borderRadius: "3px", overflow: "hidden", width: "100%" }}>
                                                 <div style={{ height: "100%", width: `${course.percentage}%`, background: "linear-gradient(90deg, #E8773F, #F2B345)", borderRadius: "3px", transition: "width 0.4s ease-out" }}></div>
                                             </div>
                                         </div>

@@ -7,10 +7,10 @@
 }
 
 .profile-dashboard-layout {
-    display: grid;
-    grid-template-columns: 1.15fr 0.85fr;
-    gap: 2rem;
-    align-items: start;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
 }
 
 /* Editor Card Form */
@@ -232,8 +232,8 @@
 
 /* Profile Card View */
 .profile-preview-card {
-    position: sticky;
-    top: 96px;
+    width: 100%;
+    max-width: 500px;
 }
 
 .student-profile-card {

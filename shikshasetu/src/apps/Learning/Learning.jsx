@@ -15,8 +15,10 @@ import {
     X,
     ArrowLeft,
     Clock,
-    Video
+    Video,
+    GraduationCap
 } from "lucide-react";
+import { motion } from "framer-motion";
 import "./learning.css";
 
 export default function Learning({ learningSubTab, setLearningSubTab, t = (k, fallback) => fallback || k }) {
@@ -1038,17 +1040,17 @@ Format the output strictly as a JSON array. Do not wrap the JSON in markdown cod
                         <div style={{ textAlign: "center" }}>
                             <GraduationCap size={48} className="text-[#e8773f]" style={{ margin: "0 auto 1.5rem auto", display: "block" }} />
                             <h3 style={{ fontSize: "1.35rem", fontWeight: "750", marginBottom: "0.75rem", color: "white" }}>
-                                Enroll in this Course?
+                                Do you want to enroll the course?
                             </h3>
                             <p style={{ color: "var(--text-light)", fontSize: "0.92rem", lineHeight: "1.5", marginBottom: "2rem" }}>
-                                Do you want to enroll in the course <strong>{enrollingVideo.title}</strong> ({enrollingVideo.category})? This will start the course and display your watch progress in your profile.
+                                Enrolling in <strong>{enrollingVideo.title}</strong> ({enrollingVideo.category}) will start the course and track your watch progress.
                             </p>
                             <div className="enroll-modal-buttons">
                                 <button type="button" className="btn-no" onClick={() => setEnrollingVideo(null)}>
-                                    No, Cancel
+                                    No
                                 </button>
                                 <button type="button" className="btn-yes" onClick={handleConfirmEnroll}>
-                                    Yes, Enroll
+                                    Yes
                                 </button>
                             </div>
                         </div>
