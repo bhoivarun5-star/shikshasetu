@@ -734,3 +734,27 @@
 .dark-theme .premium-search-clear:hover {
     background: rgba(255, 255, 255, 0.08);
 }
+
+/* Premium Search Button Styles */
+.premium-search-btn {
+    background: linear-gradient(135deg, #E8773F 0%, #F2B345 100%);
+    border: none;
+    color: white;
+    font-weight: 750;
+    padding: 10px 24px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 0.88rem;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 12px -3px rgba(232, 119, 63, 0.3);
+    flex-shrink: 0;
+}
+
+.premium-search-btn:hover {
+    opacity: 0.95;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px -3px rgba(232, 119, 63, 0.4);
+}

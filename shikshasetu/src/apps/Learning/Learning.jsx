@@ -574,17 +574,16 @@ Format the output strictly as a JSON array. Do not wrap the JSON in markdown cod
 
                         {/* Recommended Video Lectures */}
                         <div className="lectures-grid-section mt-10">
-                            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                                <div>
-                                    <h3 className="text-lg font-bold text-slate-800 dark:text-slate-200 flex items-center gap-2">
-                                        <Video className="text-[#e8773f]" size={20} />
-                                        {t("recommended_lectures_title", "Recommended Video Lectures")}
-                                    </h3>
-                                    <p className="text-sm text-slate-500 mt-1">
-                                        {t("recommended_lectures_desc", "Directly stream course lectures and track your progress in real-time.")}
-                                    </p>
-                                </div>
-                                <div className="premium-search-wrapper">
+                            <h3 className="text-lg font-bold text-slate-800 dark:text-slate-200 flex items-center gap-2">
+                                <Video className="text-[#e8773f]" size={20} />
+                                {t("recommended_lectures_title", "Recommended Video Lectures")}
+                            </h3>
+                            <p className="text-sm text-slate-500 mt-1">
+                                {t("recommended_lectures_desc", "Directly stream course lectures and track your progress in real-time.")}
+                            </p>
+
+                            <div className="flex gap-3 mt-4 mb-6">
+                                <div className="premium-search-wrapper flex-1">
                                     <div className="premium-search-inner">
                                         <Search className="premium-search-icon" size={16} />
                                         <input
@@ -606,6 +605,10 @@ Format the output strictly as a JSON array. Do not wrap the JSON in markdown cod
                                         )}
                                     </div>
                                 </div>
+                                <button type="button" className="premium-search-btn">
+                                    <Search size={14} />
+                                    <span>Search</span>
+                                </button>
                             </div>
                             
                             <div className="content-grid mt-4">
