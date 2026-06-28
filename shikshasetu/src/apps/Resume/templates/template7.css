@@ -1,0 +1,110 @@
+/* Template 7: Sleek Rose (Burgundy) */
+.template-7 .ats-resume-sheet {
+    font-family: 'Georgia', serif;
+    color: #4c0519;
+    line-height: 1.5;
+    padding: 3rem;
+}
+
+.template-7 .ats-header {
+    text-align: left;
+    border-left: 4px solid #be123c;
+    padding-left: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.template-7 .ats-name {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: #9f1239;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.15rem;
+}
+
+.template-7 .ats-title {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #be123c;
+    margin-bottom: 0.5rem;
+}
+
+.template-7 .ats-contact-row {
+    font-size: 0.85rem;
+    color: #881337;
+    display: flex;
+    gap: 1.25rem;
+}
+
+.template-7 .ats-section {
+    margin-bottom: 1.5rem;
+}
+
+.template-7 .ats-sec-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #9f1239;
+    border-bottom: 1px dashed #fda4af;
+    padding-bottom: 0.25rem;
+    margin-bottom: 0.75rem;
+}
+
+.template-7 .ats-summary-text {
+    font-size: 0.875rem;
+    color: #4c0519;
+}
+
+.template-7 .ats-skills-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.template-7 .ats-skill-pill {
+    background: #fff1f2;
+    border: 1px solid #fecdd3;
+    color: #9f1239;
+    font-size: 0.8rem;
+    font-weight: 500;
+    padding: 0.15rem 0.5rem;
+    border-radius: 9999px;
+}
+
+.template-7 .ats-experience-block,
+.template-7 .ats-education-block,
+.template-7 .ats-project-block {
+    margin-bottom: 1rem;
+}
+
+.template-7 .ats-block-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 0.15rem;
+}
+
+.template-7 .ats-block-title {
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: #4c0519;
+}
+
+.template-7 .ats-block-subtitle {
+    font-size: 0.85rem;
+    color: #9f1239;
+    font-style: italic;
+}
+
+.template-7 .ats-block-date {
+    font-size: 0.8rem;
+    color: #be123c;
+    font-weight: bold;
+    margin-left: auto;
+}
+
+.template-7 .ats-block-desc {
+    font-size: 0.85rem;
+    color: #4c0519;
+    white-space: pre-line;
+}

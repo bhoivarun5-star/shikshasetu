@@ -44,7 +44,13 @@ export default function Home({ user = null, onLogout = () => {}, language = "en"
     const [darkMode, setDarkMode] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [learningSubTab, setLearningSubTab] = useState("courses");
+    const [assessmentCourse, setAssessmentCourse] = useState(null);
     const [mobileLearningOpen, setMobileLearningOpen] = useState(false);
+
+    const handleAttemptAssessment = (course) => {
+        setAssessmentCourse(course);
+        setActiveTab("assessment");
+    };
     // Controls visibility of the learning dropdown on hover (desktop)
     const [learningDropdownOpen, setLearningDropdownOpen] = useState(false);
 
@@ -65,6 +71,7 @@ export default function Home({ user = null, onLogout = () => {}, language = "en"
         phone: user?.mobileNumber || "+91 98765 43210",
         bio: user?.bio || "Passionate student learning frontend development and exploring UI/UX design. Looking for internship opportunities.",
         skills: user?.skills || "React, Node.js, Python, Figma",
+        badges: []
     });
 
     // Fetch profile from backend on load
@@ -114,6 +121,7 @@ export default function Home({ user = null, onLogout = () => {}, language = "en"
                         learningSubTab={learningSubTab}
                         setLearningSubTab={setLearningSubTab}
                         t={t}
+                        onAttemptAssessment={handleAttemptAssessment}
                     />
                 );
 
@@ -124,7 +132,22 @@ export default function Home({ user = null, onLogout = () => {}, language = "en"
                 return <Jobs />;
 
             case "assessment":
-                return <Assessment />;
+                return (
+                    <Assessment
+                        assessmentCourse={assessmentCourse}
+                        clearAssessmentCourse={() => setAssessmentCourse(null)}
+                        onBadgeEarned={() => {
+                            fetch("/api/profile/")
+                                .then((res) => res.json())
+                                .then((data) => {
+                                    if (data.success && data.profile) {
+                                        setProfileData(data.profile);
+                                    }
+                                })
+                                .catch((err) => console.error("Error updating profile after badge earned:", err));
+                        }}
+                    />
+                );
 
             case "resume":
                 return <Resume resumeData={resumeData} setResumeData={setResumeData} />;
@@ -133,7 +156,7 @@ export default function Home({ user = null, onLogout = () => {}, language = "en"
                 return <AI />;
 
             case "community":
-                return <Community />;
+                return <Community userName={profileData.name || user?.fullName || "Aarav Sharma"} />;
 
             case "mentorship":
                 return <Mentorship />;
@@ -242,14 +265,26 @@ export default function Home({ user = null, onLogout = () => {}, language = "en"
                             {darkMode ? <Sun size={18} /> : <Moon size={18} />}
                         </button>
 
-                        <div className="profile-badge-nav">
-                            <div className="avatar-letter">
-                                {profileData.name ? profileData.name.split(" ").map(w => w[0]).join("").toUpperCase() : "AS"}
-                            </div>
+                        <div 
+                            className="profile-badge-nav"
+                            onClick={() => setActiveTab("profile")}
+                        >
+                            {profileData.profile_image ? (
+                                <div 
+                                    className="avatar-image-nav" 
+                                    style={{ backgroundImage: `url(${profileData.profile_image})` }} 
+                                />
+                            ) : (
+                                <div className="avatar-letter">
+                                    {profileData.name ? profileData.name.split(" ").map(w => w[0]).join("").toUpperCase() : "AS"}
+                                </div>
+                            )}
                             <span className="profile-label">
                                 {profileData.name ? profileData.name.split(" ")[0] : "Aarav"}
                             </span>
                         </div>
+
+
 
                         {user && (
                             <button

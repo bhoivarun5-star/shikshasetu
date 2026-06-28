@@ -1,0 +1,112 @@
+/* Template 9: Compact Minimal */
+.template-9 .ats-resume-sheet {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #27272a;
+    line-height: 1.35;
+    padding: 2rem;
+    font-size: 0.825rem;
+}
+
+.template-9 .ats-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-bottom: 2px solid #27272a;
+    padding-bottom: 0.75rem;
+    margin-bottom: 1.25rem;
+}
+
+.template-9 .ats-name {
+    font-size: 2rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: #09090b;
+    line-height: 1;
+}
+
+.template-9 .ats-title {
+    font-size: 0.95rem;
+    font-weight: bold;
+    color: #52525b;
+    margin-top: 0.25rem;
+}
+
+.template-9 .ats-contact-row {
+    font-size: 0.775rem;
+    color: #52525b;
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+}
+
+.template-9 .ats-section {
+    margin-bottom: 1.25rem;
+}
+
+.template-9 .ats-sec-title {
+    font-size: 0.9rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #09090b;
+    border-bottom: 1.5px solid #27272a;
+    padding-bottom: 0.15rem;
+    margin-bottom: 0.5rem;
+}
+
+.template-9 .ats-summary-text {
+    color: #3f3f46;
+}
+
+.template-9 .ats-skills-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+.template-9 .ats-skill-pill {
+    background: #f4f4f5;
+    color: #18181b;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.1rem 0.4rem;
+    border: 1px solid #e4e4e7;
+}
+
+.template-9 .ats-experience-block,
+.template-9 .ats-education-block,
+.template-9 .ats-project-block {
+    margin-bottom: 0.75rem;
+}
+
+.template-9 .ats-block-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.template-9 .ats-block-title {
+    font-weight: bold;
+    font-size: 0.85rem;
+    color: #09090b;
+}
+
+.template-9 .ats-block-subtitle {
+    font-size: 0.825rem;
+    color: #52525b;
+    font-weight: bold;
+    margin-left: 0.5rem;
+}
+
+.template-9 .ats-block-date {
+    font-size: 0.775rem;
+    color: #71717a;
+    margin-left: auto;
+    font-weight: bold;
+}
+
+.template-9 .ats-block-desc {
+    font-size: 0.8rem;
+    color: #3f3f46;
+    white-space: pre-line;
+}

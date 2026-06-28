@@ -21,9 +21,97 @@ import {
 import { motion } from "framer-motion";
 import "./learning.css";
 import CoursesSection from "./CoursesSection";
+const DEFAULT_ROADMAP_PHASES = [
+    { step: 1, title: "Web Foundations", desc: "HTML5 semantic tags, CSS layouts (Flexbox & Grid), responsive design.", topics: ["HTML5 semantics", "CSS layout rules", "Media queries", "CSS Flexbox", "CSS Grid", "Animations"], details: "Focus on building a responsive personal profile website. Practice layout design using CSS Flexbox and Grid, ensuring the site functions well on both mobile and desktop screens." },
+    { step: 2, title: "JavaScript Core", desc: "DOM manipulation, asynchronous fetching, fetch APIs, arrays callbacks.", topics: ["DOM manipulations", "Array methods (map, filter)", "ES6 modules", "Fetch APIs", "Error handling", "Storage (localStorage)"], details: "Build an interactive todo app or a weather dashboard. Practice writing asynchronous functions with fetch APIs and storing local user data in localStorage." },
+    { step: 3, title: "React Framework", desc: "React interactive components, state, hooks (useState, useEffect).", topics: ["Components props", "State management", "React custom hooks", "React router paths", "Context API", "Forms validations"], details: "Create a multi-page dashboard app. Focus on component reactivity, managing parent-child component communication, state lifting, and clean form validation rules." },
+    { step: 4, title: "Testing & Deployment", desc: "Vite, Git source branching, deploying static sites (Netlify, Vercel).", topics: ["Git workflows", "Vite builds", "Netlify/Vercel hostings", "Lighthouse testing", "Portfolio creations", "Continuous integration"], details: "Deploy your final React app to Vercel or Netlify. Set up GitHub Actions for continuous integration, run Lighthouse to analyze and improve web performance." }
+];
 
-export default function Learning({ learningSubTab, setLearningSubTab, t = (k, fallback) => fallback || k }) {
+const PRESET_ROADMAPS = {
+    "python": {
+        title: "Python Developer Roadmap",
+        phases: [
+            { step: 1, title: "Python Basics", desc: "Understand variables, data types, loops, conditionals, and functions.", topics: ["Variables & Expressions", "If-Else & Loops", "Lists, Tuples, Dicts", "Functions & Scope", "File I/O basics"], details: "Begin by writing simple scripts. Focus on learning flow control (if/else, loops) and data structures (lists, dictionaries). Try building a simple CLI calculator." },
+            { step: 2, title: "OOP & Advanced Python", desc: "Master Object-Oriented Programming, exception handling, and modules.", topics: ["Classes & Inheritance", "Exceptions handling", "Imports & Modules", "Decorators & Generators", "List Comprehensions"], details: "Learn the core concepts of Object-Oriented Programming (OOP) including inheritance, encapsulation, and polymorphism. Practice writing reusable and modular code." },
+            { step: 3, title: "Libraries & Databases", desc: "Learn packages, virtual environments, and database integration.", topics: ["pip & virtual environments", "SQLite & PostgreSQL", "SQLAlchemy ORM", "Requests library", "Unit testing (unittest/pytest)"], details: "Connect Python to databases using sqlite3 and PostgreSQL. Use ORMs like SQLAlchemy to map database tables to Python classes. Practice writing unit tests." },
+            { step: 4, title: "Web Frameworks & APIs", desc: "Build REST APIs and web servers using modern Python web frameworks.", topics: ["FastAPI foundations", "Flask web app building", "RESTful API design", "Asynchronous Python (asyncio)", "Deployment to Render/Heroku"], details: "Choose either FastAPI or Flask to build web APIs. Learn about HTTP requests, routing, query parameters, and serializing data to JSON formats." }
+        ]
+    },
+    "react": {
+        title: "React Developer Roadmap",
+        phases: [
+            { step: 1, title: "React Foundations", desc: "Understand JSX, functional components, props, and rendering patterns.", topics: ["JSX Syntax rules", "Functional Components", "Props passing", "Lists & Keys", "Conditional rendering"], details: "Learn the declarative nature of React. Focus on how props flow from parent to child components and how JSX gets converted to virtual DOM nodes." },
+            { step: 2, title: "State & Hooks", desc: "Master reactive state management and common React lifecycle hooks.", topics: ["useState state variables", "useEffect side effects", "Handling Forms & Inputs", "Custom React hooks", "Component Lifecycle"], details: "Understand how React components re-render when state changes. Master the dependency array in useEffect to fetch data and clean up events." },
+            { step: 3, title: "Routing & Architecture", desc: "Learn client-side routing, code organization, and folder structure.", topics: ["React Router Dom", "Dynamic path segments", "Layout & Outlet components", "Context API sharing", "Folder organization rules"], details: "Implement multi-page feeling apps with React Router. Learn to share global user session states across distant components using the Context API." },
+            { step: 4, title: "State Management & Performance", desc: "Scale React applications with advanced state containers and optimization.", topics: ["Zustand / Redux Toolkit", "React Query data fetching", "useMemo & useCallback", "React.lazy & Suspense", "Profiling performance"], details: "Integrate state management libraries like Zustand. Implement optimization techniques like code-splitting using lazy loading and memoization." }
+        ]
+    },
+    "data science": {
+        title: "Data Science Roadmap",
+        phases: [
+            { step: 1, title: "Math & Programming Basics", desc: "Build foundations in Python programming, linear algebra, and statistics.", topics: ["Python for Data Science", "Linear Algebra matrices", "Probability theory", "Descriptive statistics", "Jupyter Notebooks"], details: "Learn the core mathematical principles (mean, variance, probability distributions) and write clean Python code using Jupyter Notebooks." },
+            { step: 2, title: "Data Manipulation", desc: "Wrangle, clean, and pre-process datasets using pandas and numpy.", topics: ["Pandas DataFrames", "NumPy array operations", "Handling missing values", "Data merging & filtering", "Feature engineering basics"], details: "Work with real-world messy datasets. Clean duplicate data, fill missing cells, convert data formats, and create new descriptive columns." },
+            { step: 3, title: "Exploratory Data Analysis", desc: "Visualize patterns and distributions in datasets using visualization tools.", topics: ["Matplotlib plotting", "Seaborn styling", "Exploratory data analysis (EDA)", "Outlier detections", "Correlation analysis"], details: "Create plots, charts, and heatmaps to discover relationships between features. Document your insights and tell stories with data." },
+            { step: 4, title: "Machine Learning Foundations", desc: "Train and evaluate classic machine learning models using Scikit-Learn.", topics: ["Linear & Logistic Regression", "Decision Trees & Forests", "Model training & splitting", "Evaluation metrics (F1, MSE)", "Overfitting & regularization"], details: "Train regression models to predict numbers, and classification models to predict labels. Use cross-validation to assess performance." }
+        ]
+    },
+    "cyber security": {
+        title: "Cybersecurity Pathway Roadmap",
+        phases: [
+            { step: 1, title: "Networking & OS Basics", desc: "Understand computer networks, routing protocols, and operating systems.", topics: ["TCP/IP & OSI model", "DNS, HTTP, & TLS", "Linux commands & bash", "Windows Server admin", "Network sniffing (Wireshark)"], details: "Learn how packets travel through the internet. Master the Linux CLI and practice analyzing network logs with Wireshark." },
+            { step: 2, title: "Security Fundamentals", desc: "Learn key security principles, cryptography, and access control models.", topics: ["Symmetric & Asymmetric encryption", "Hashing & Digital Signatures", "IAM & Access controls", "Firewalls & VPNs", "Common attack vectors"], details: "Study symmetric and asymmetric encryption. Implement secure access guidelines and understand how firewalls inspect traffic." },
+            { step: 3, title: "Offensive Security", desc: "Understand ethical hacking, penetration testing, and vulnerability assessment.", topics: ["OWASP Top 10 vulnerabilities", "Penetration testing phases", "Nmap network scanning", "Metasploit framework", "SQL injection & XSS testing"], details: "Learn to identify system vulnerabilities. Build safe labs to practice SQL Injection, Cross-Site Scripting (XSS), and basic exploits." },
+            { step: 4, title: "Defensive Security & Operations", desc: "Learn how to monitor, detect, and respond to cyber attacks.", topics: ["SIEM tools (Splunk)", "Log analysis & alerts", "Incident Response phases", "Security auditing basics", "Disaster recovery planning"], details: "Understand security monitoring. Learn how to write security alerts and respond to breaches in an network environment." }
+        ]
+    },
+    "devops": {
+        title: "DevOps & Cloud Roadmap",
+        phases: [
+            { step: 1, title: "Linux & Git", desc: "Learn terminal navigation, shell scripting, and version control workflows.", topics: ["Linux administration", "Bash shell scripting", "Git branching strategies", "GitHub pull requests", "SSH keys & access"], details: "Build a strong command-line foundation. Automate tasks using bash scripts and master advanced Git commits and rebase patterns." },
+            { step: 2, title: "Containers & Orchestration", desc: "Package applications into container images and manage deployments at scale.", topics: ["Docker containers & images", "Dockerfile writing rules", "Docker Compose stacks", "Kubernetes pods & services", "K8s deployments & configs"], details: "Containerize static and dynamic websites. Create Dockerfiles, link services via Compose, and learn Kubernetes deployment configurations." },
+            { step: 3, title: "CI/CD & IaC", desc: "Automate build and deployment pipelines, and configure cloud servers programmatically.", topics: ["GitHub Actions pipelines", "Jenkins CI jobs", "Terraform provisionings", "Ansible playbooks", "Secrets management"], details: "Build automated pipelines that trigger on push. Use Terraform to spin up servers, and configure them automatically." },
+            { step: 4, title: "Monitoring & Cloud Providers", desc: "Deploy pipelines on cloud infrastructures and monitor metrics & logs.", topics: ["AWS services (EC2, S3)", "Prometheus metrics collection", "Grafana dashboards", "ELK stack log analysis", "Site Reliability Engineering (SRE)"], details: "Host apps in the cloud. Collect system resource logs and visualize application performance using Prometheus and Grafana dashboards." }
+        ]
+    },
+    "ui/ux": {
+        title: "UI/UX Designer Roadmap",
+        phases: [
+            { step: 1, title: "UX Research & Wireframes", desc: "Understand user needs, research methodologies, and outline page structures.", topics: ["User interviews & personas", "User journey mapping", "Information architecture", "Low-fidelity wireframes", "Sketching ideas"], details: "Start with the user's perspective. Create descriptive personas and structure user flows before touching colors or typography." },
+            { step: 2, title: "UI Design Principles", desc: "Master the visual guidelines of clean, premium user interface designs.", topics: ["Typography hierarchies", "Color theory & HSL", "Grids & spacing rules", "Visual hierarchy techniques", "Design guidelines (Material/iOS)"], details: "Learn to pair fonts and use grid systems. Master light and dark modes, ensuring consistent spacing and accessible contrast ratios." },
+            { step: 3, title: "Figma Prototyping", desc: "Build high-fidelity vector designs and interactive app prototypes in Figma.", topics: ["Figma auto-layout rules", "Components & variants", "Interactive prototyping", "Transitions & micro-animations", "Design system setups"], details: "Leverage Figma's auto-layout for responsive UI blocks. Set up robust component libraries with variants and design system tokens." },
+            { step: 4, title: "Usability Testing & Handoff", desc: "Test prototypes with real users, gather feedback, and deliver designs to developers.", topics: ["Heuristic evaluations", "A/B testing methods", "Figma developer mode", "CSS exporting instructions", "Asset exports"], details: "Conduct user testing to validate layout choices. Export designs cleanly to development teams with explicit CSS metrics and code links." }
+        ]
+    },
+    "machine learning": {
+        title: "Machine Learning Roadmap",
+        phases: [
+            { step: 1, title: "ML Fundamentals", desc: "Learn basic mathematics, python libraries, and dataset handling.", topics: ["Python & Jupyter basics", "Linear Algebra & Calculus", "Probability & Statistics", "Data cleaning & scaling", "Scikit-Learn library"], details: "Understand how matrices represent data. Practice normalizing, scaling, and preparing feature vectors for training models." },
+            { step: 2, title: "Supervised & Unsupervised Learning", desc: "Master classic ML algorithms for classification, regression, and clustering.", topics: ["Linear & Logistic Regression", "Decision Trees & Random Forests", "Support Vector Machines (SVM)", "K-Means & DBSCAN clustering", "Principal Component Analysis (PCA)"], details: "Train classification models to label items, regression models to project curves, and clustering models to group features without labels." },
+            { step: 3, title: "Deep Learning & Neural Networks", desc: "Build and compile artificial neural networks using PyTorch or TensorFlow.", topics: ["Neural Network layers", "Activation functions (ReLU, Sigmoid)", "Backpropagation & GD", "PyTorch / TensorFlow syntax", "Loss functions"], details: "Learn the math behind weights and biases. Code neural network architectures, configure optimizers, and run forward/backward passes." },
+            { step: 4, title: "Advanced ML & Deployment", desc: "Learn advanced vision/NLP models and how to serve predictions via APIs.", topics: ["Convolutional Networks (CNN)", "Transformer architectures", "Model serialization (joblib/ONNX)", "API deployment (FastAPI/Docker)", "Model monitoring concepts"], details: "Expose your model parameters as interactive REST APIs. Bundle models inside Docker containers to serve predictions reliably." }
+        ]
+    },
+    "java": {
+        title: "Java Developer Roadmap",
+        phases: [
+            { step: 1, title: "Java Core Syntax", desc: "Understand variables, conditionals, arrays, methods, and compile workflows.", topics: ["Java JDK & JVM setups", "Data types & variables", "Control structures (loops/if)", "Arrays & ArrayLists", "Method parameters"], details: "Set up the Java Development Kit. Learn to compile and run Java programs from the terminal, focusing on basic algorithmic structures." },
+            { step: 2, title: "OOP & Collections", desc: "Master interfaces, abstract classes, collections, and generic structures.", topics: ["Classes, Objects, Inheritance", "Polymorphism & Interfaces", "Java Collections (List, Set, Map)", "Generics foundations", "Exception handling (try-catch)"], details: "Write scalable Object-Oriented code. Use Java standard collections (like HashMaps and ArrayLists) to manage groups of objects." },
+            { step: 3, title: "Streams & Concurrency", desc: "Learn modern Java functional features and handling multi-threaded tasks.", topics: ["Java Streams API", "Lambda expressions", "Concurrency & Thread pools", "File I/O and NIO2", "JVM memory models"], details: "Use the functional Streams API to clean up loops. Learn thread synchronization, executors, and how the JVM allocates memory." },
+            { step: 4, title: "Spring Boot APIs", desc: "Build enterprise REST APIs, connect databases, and configure security.", topics: ["Spring Boot foundations", "REST Controllers & routing", "Spring Data JPA & Hibernate", "Spring Security credentials", "Maven/Gradle dependencies"], details: "Develop production-ready backend servers. Integrate relational databases using JPA, write controllers, and secure API endpoints." }
+        ]
+    }
+};
+
+export default function Learning({ learningSubTab, setLearningSubTab, t = (k, fallback) => fallback || k, onAttemptAssessment }) {
     const [selectedRoadmapStep, setSelectedRoadmapStep] = useState(1);
+    const [roadmapPhases, setRoadmapPhases] = useState(DEFAULT_ROADMAP_PHASES);
+    const [roadmapTitle, setRoadmapTitle] = useState("Frontend Development Roadmap");
+    const [roadmapOption, setRoadmapOption] = useState("Frontend Engineering");
+    const [customRoadmapQuery, setCustomRoadmapQuery] = useState("");
+    const [roadmapSearchQuery, setRoadmapSearchQuery] = useState("");
+    const [isGeneratingRoadmap, setIsGeneratingRoadmap] = useState(false);
+    const [roadmapError, setRoadmapError] = useState("");
     const [videoLectures, setVideoLectures] = useState([]);
     const [selectedVideo, setSelectedVideo] = useState(null);
     const [watchProgressPercent, setWatchProgressPercent] = useState(0);
@@ -457,7 +545,7 @@ Format the output strictly as a JSON array. Do not wrap the JSON in markdown cod
                     "X-Title": "ShikshaSetu"
                 },
                 body: JSON.stringify({
-                    model: "openai/gpt-oss-120b:free",
+                    model: "cohere/north-mini-code:free",
                     messages: [
                         {
                             role: "user",
@@ -490,6 +578,100 @@ Format the output strictly as a JSON array. Do not wrap the JSON in markdown cod
             setExploreError("Failed to fetch recommended courses. Please check your query or try again later.");
         } finally {
             setIsExploring(false);
+        }
+    };
+
+    const handleRoadmapSearch = async (e) => {
+        if (e) e.preventDefault();
+        const query = roadmapSearchQuery.trim().toLowerCase();
+        if (!query) return;
+
+        setIsGeneratingRoadmap(true);
+        setRoadmapError("");
+
+        // Check if there is an exact or substring match in our presets dictionary
+        let matchedKey = null;
+        Object.keys(PRESET_ROADMAPS).forEach(key => {
+            if (query.includes(key) || key.includes(query)) {
+                matchedKey = key;
+            }
+        });
+
+        if (matchedKey) {
+            // Match found! Load the preset roadmap instantly
+            setTimeout(() => {
+                const roadmap = PRESET_ROADMAPS[matchedKey];
+                setRoadmapPhases(roadmap.phases);
+                setRoadmapTitle(roadmap.title);
+                setSelectedRoadmapStep(1);
+                setIsGeneratingRoadmap(false);
+            }, 500); // Small timeout to show spinner animation for polish
+            return;
+        }
+
+        // Fallback: Use AI to generate the roadmap!
+        const prompt = `Return a detailed learning roadmap for the topic: "${roadmapSearchQuery}".
+The roadmap must have between 4 and 6 sequential phases.
+For each phase, output a JSON object with keys:
+- "step": Phase number (1, 2, 3, etc.)
+- "title": A short, catchy title for this phase (max 5 words)
+- "desc": A 1-sentence description of the goals of this phase
+- "topics": An array of 5-6 core topics or skills to learn in this phase
+- "details": A detailed description (2-3 sentences) explaining how to study this phase, recommended practice projects, or resources.
+
+Format the output strictly as a JSON array. Do not wrap the JSON in markdown code blocks like \`\`\`json. Return only the JSON string.`;
+
+        try {
+            const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+                method: "POST",
+                headers: {
+                    "Authorization": "Bearer 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",
+                    "Content-Type": "application/json",
+                    "HTTP-Referer": "http://localhost:5173",
+                    "X-Title": "ShikshaSetu"
+                },
+                body: JSON.stringify({
+                    model: "cohere/north-mini-code:free",
+                    messages: [
+                        {
+                            role: "user",
+                            content: prompt
+                        }
+                    ]
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error(`API returned status ${response.status}`);
+            }
+
+            const data = await response.json();
+            let text = data.choices[0].message.content.trim();
+            
+            if (text.startsWith("```")) {
+                text = text.replace(/^```json\s*/i, "").replace(/```$/, "").trim();
+            }
+
+            const parsed = JSON.parse(text);
+            if (Array.isArray(parsed) && parsed.length > 0) {
+                const formatted = parsed.map((item, idx) => ({
+                    step: idx + 1,
+                    title: item.title || `Phase ${idx + 1}`,
+                    desc: item.desc || "",
+                    topics: Array.isArray(item.topics) ? item.topics : [],
+                    details: item.details || "Practice the topics learned in this phase by building mini-projects and checking documentation."
+                }));
+                setRoadmapPhases(formatted);
+                setRoadmapTitle(`${roadmapSearchQuery.charAt(0).toUpperCase() + roadmapSearchQuery.slice(1)} Roadmap`);
+                setSelectedRoadmapStep(1);
+            } else {
+                throw new Error("Response is not a valid JSON array.");
+            }
+        } catch (err) {
+            console.error("OpenRouter API error:", err);
+            setRoadmapError("Failed to generate AI roadmap. Please check your query or try again later.");
+        } finally {
+            setIsGeneratingRoadmap(false);
         }
     };
 
@@ -550,52 +732,122 @@ Format the output strictly as a JSON array. Do not wrap the JSON in markdown cod
 
                 {learningSubTab === "roadmap" && (
                     <div className="roadmap-tab">
-                        <div className="roadmap-header">
-                            <h3>{t("roadmap_title", "Frontend Development Roadmap")}</h3>
-                            <p>{t("roadmap_desc", "Click on any phase to view detail guides, topics, and checkpoints.")}</p>
+                        <div className="roadmap-header flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                            <div>
+                                <h3>{roadmapTitle}</h3>
+                                <p>{t("roadmap_desc", "Search a skill to see a learning pathway, and click a step for details.")}</p>
+                            </div>
+                            <div className="roadmap-generator-controls flex flex-wrap items-center gap-3 w-full md:w-auto">
+                                <form onSubmit={handleRoadmapSearch} className="roadmap-search-container flex items-center gap-2 w-full">
+                                    <div className="relative flex-grow">
+                                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+                                        <input
+                                            type="text"
+                                            placeholder="Search a skill (e.g. Python, React, Cybersecurity...)"
+                                            value={roadmapSearchQuery}
+                                            onChange={(e) => setRoadmapSearchQuery(e.target.value)}
+                                            className="roadmap-search-input pl-10 pr-4 py-2 border rounded-xl w-full text-sm focus:outline-none focus:ring-2 focus:ring-[#e8773f] bg-white dark:bg-slate-700 text-slate-900 dark:text-white border-slate-200 dark:border-slate-600"
+                                        />
+                                    </div>
+                                    <button
+                                        type="submit"
+                                        disabled={isGeneratingRoadmap || !roadmapSearchQuery.trim()}
+                                        className="roadmap-generate-btn px-4 py-2 bg-[#e8773f] text-white rounded-xl text-sm font-semibold flex items-center gap-2 hover:bg-[#d6652e] disabled:opacity-50"
+                                    >
+                                        {isGeneratingRoadmap ? (
+                                            <>
+                                                <Loader2 className="animate-spin" size={16} />
+                                                Generating...
+                                            </>
+                                        ) : (
+                                            <>
+                                                <Sparkles size={16} />
+                                                Search
+                                            </>
+                                        )}
+                                    </button>
+                                </form>
+                            </div>
                         </div>
-                        <div className="roadmap-flow">
-                            {[
-                                { step: 1, title: t("web_foundations", "Web Foundations"), desc: t("web_foundations_desc", "HTML5 semantic tags, CSS layouts (Flexbox & Grid), responsive design."), topics: ["HTML5 semantic tags", "CSS layouts (Flexbox, Grid)", "Responsive media queries", "CSS variables"] },
-                                { step: 2, title: t("javascript_core", "JavaScript Core"), desc: t("javascript_core_desc", "DOM manipulation, asynchronous fetching, fetch APIs, arrays callbacks."), topics: ["DOM dynamic scripts", "ES6+ variables & functions", "Promises & async/await", "Fetch APIs & HTTP requests"] },
-                                { step: 3, title: t("react_framework", "React Framework"), desc: t("react_framework_desc", "React interactive components, state, hooks (useState, useEffect)."), topics: ["JSX & Components props", "useState & useEffect hooks", "React Router", "Vite & npm environments"] },
-                                { step: 4, title: t("testing_deployment", "Testing & Deployment"), desc: t("testing_deployment_desc", "Vite, Git source branching, deploying static sites (Netlify, Vercel)."), topics: ["Git & GitHub source codes", "Vercel / Netlify cloud deploy", "Performance audits", "Portfolio projects"] },
-                            ].map((phase) => (
+
+                        {/* Popular Preset Tags */}
+                        <div className="roadmap-popular-tags flex flex-wrap gap-2 items-center mt-3 mb-4">
+                            <span className="text-xs text-slate-400 dark:text-slate-500 font-semibold uppercase tracking-wider mr-1">Popular:</span>
+                            {["React", "Python", "Data Science", "Cyber Security", "DevOps", "UI/UX", "Java", "Machine Learning"].map(tag => (
+                                <button
+                                    key={tag}
+                                    onClick={() => {
+                                        setRoadmapSearchQuery(tag);
+                                        const query = tag.trim().toLowerCase();
+                                        let matchedKey = null;
+                                        Object.keys(PRESET_ROADMAPS).forEach(key => {
+                                            if (query.includes(key) || key.includes(query)) {
+                                                matchedKey = key;
+                                            }
+                                        });
+                                        if (matchedKey) {
+                                            const roadmap = PRESET_ROADMAPS[matchedKey];
+                                            setRoadmapPhases(roadmap.phases);
+                                            setRoadmapTitle(roadmap.title);
+                                            setSelectedRoadmapStep(1);
+                                        }
+                                    }}
+                                    className="roadmap-tag-btn px-3 py-1.5 rounded-lg border text-xs font-semibold cursor-pointer border-slate-200 dark:border-slate-700 hover:border-[#e8773f] hover:text-[#e8773f] bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-400 transition-colors"
+                                >
+                                    {tag}
+                                </button>
+                            ))}
+                        </div>
+
+                        {roadmapError && (
+                            <div className="roadmap-error-msg text-red-500 bg-red-50 dark:bg-red-950/30 p-4 rounded-xl border border-red-200 dark:border-red-900 text-sm mb-4">
+                                {roadmapError}
+                            </div>
+                        )}
+
+                        <div className="roadmap-flow mt-6 flex flex-col gap-4">
+                            {roadmapPhases.map((phase) => (
                                 <div
                                     key={phase.step}
-                                    className={`roadmap-step-card ${selectedRoadmapStep === phase.step ? "selected" : ""}`}
+                                    className={`roadmap-step-card flex items-center gap-4 p-4 border rounded-2xl cursor-pointer transition-all duration-250 bg-white dark:bg-slate-800 hover:translate-x-1 ${selectedRoadmapStep === phase.step ? "border-[#e8773f] bg-orange-50/10 dark:bg-orange-950/10" : "border-slate-100 dark:border-slate-700"}`}
                                     onClick={() => setSelectedRoadmapStep(phase.step)}
                                 >
-                                    <div className="step-circle">{phase.step}</div>
-                                    <div className="step-info">
-                                        <h4>{phase.title}</h4>
-                                        <p>{phase.desc}</p>
+                                    <div className="step-circle w-9 h-9 rounded-full bg-[#e8773f] text-white flex items-center justify-center font-bold text-sm">
+                                        {phase.step}
                                     </div>
-                                    <ChevronRight size={18} className="step-chevron" />
+                                    <div className="step-info flex-grow">
+                                        <h4 className="font-semibold text-slate-800 dark:text-slate-200 text-base">{phase.title}</h4>
+                                        <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">{phase.desc}</p>
+                                    </div>
+                                    <ChevronRight size={18} className="text-slate-400" />
                                 </div>
                             ))}
                         </div>
                         
                         {/* Selected Roadmap Details */}
-                        <div className="roadmap-details-box mt-6 p-6 border rounded-2xl bg-white dark:bg-slate-800">
-                            <h4 className="font-semibold text-lg flex items-center gap-2">
-                                <Play size={16} className="text-[#e8773f]" />
-                                {t("phase_details_checklist", `Phase ${selectedRoadmapStep} Details & Checklist`)}
-                            </h4>
-                            <ul className="roadmap-checklist mt-4 grid grid-cols-1 md:grid-cols-2 gap-3">
-                                {[
-                                    { step: 1, topics: ["HTML5 semantics", "CSS layout rules", "Media queries", "CSS Flexbox", "CSS Grid", "Animations"] },
-                                    { step: 2, topics: ["DOM manipulations", "Array methods (map, filter)", "ES6 modules", "Fetch APIs", "Error handling", "Storage (localStorage)"] },
-                                    { step: 3, topics: ["Components props", "State management", "React custom hooks", "React router paths", "Context API", "Forms validations"] },
-                                    { step: 4, topics: ["Git workflows", "Vite builds", "Netlify/Vercel hostings", "Lighthouse testing", "Portfolio creations", "Continuous integration"] }
-                                ][selectedRoadmapStep - 1].topics.map((topic, i) => (
-                                    <li key={i} className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300">
-                                        <CheckCircle size={16} className="text-emerald-500" />
-                                        {topic}
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
+                        {roadmapPhases[selectedRoadmapStep - 1] && (
+                            <div className="roadmap-details-box mt-6 p-6 border rounded-2xl bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700">
+                                <h4 className="font-semibold text-lg flex items-center gap-2 text-slate-800 dark:text-slate-200">
+                                    <Play size={16} className="text-[#e8773f]" />
+                                    {t("phase_details_checklist", `Phase ${selectedRoadmapStep} Details & Guide`)}
+                                </h4>
+                                
+                                {roadmapPhases[selectedRoadmapStep - 1]?.details && (
+                                    <p className="text-sm text-slate-500 dark:text-slate-400 mt-3 italic leading-relaxed border-l-4 border-[#e8773f] pl-4 py-1">
+                                        {roadmapPhases[selectedRoadmapStep - 1].details}
+                                    </p>
+                                )}
+
+                                <ul className="roadmap-checklist mt-4 grid grid-cols-1 md:grid-cols-2 gap-3">
+                                    {(roadmapPhases[selectedRoadmapStep - 1]?.topics || []).map((topic, i) => (
+                                        <li key={i} className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300">
+                                            <CheckCircle size={16} className="text-emerald-500" />
+                                            {topic}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        )}
                     </div>
                 )}
 
@@ -615,6 +867,7 @@ Format the output strictly as a JSON array. Do not wrap the JSON in markdown cod
                         exploreError={exploreError}
                         exploreCourses={exploreCourses}
                         fetchAICourses={fetchAICourses}
+                        onAttemptAssessment={onAttemptAssessment}
                     />
                 )}
 
@@ -886,6 +1139,20 @@ Format the output strictly as a JSON array. Do not wrap the JSON in markdown cod
                                     <div className="progress-bar-fill orange" style={{ width: `${watchProgressPercent}%` }}></div>
                                 </div>
                             </div>
+                            {watchProgressPercent === 100 && (
+                                <button
+                                    onClick={() => {
+                                        closeVideoPlayer();
+                                        if (onAttemptAssessment) {
+                                            onAttemptAssessment(selectedVideo);
+                                        }
+                                    }}
+                                    className="ml-4 py-1.5 px-4 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all"
+                                >
+                                    <span>Attempt Assessment</span>
+                                    <ChevronRight size={14} />
+                                </button>
+                            )}
                             <div className="info-meta">
                                 <span className="duration-text">Duration: {selectedVideo.duration}</span>
                             </div>

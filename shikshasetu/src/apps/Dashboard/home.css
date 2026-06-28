@@ -167,7 +167,20 @@
     border-radius: 20px;
     border: 1px solid var(--border-color);
     background-color: var(--bg-main);
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.2s ease;
 }
+
+.profile-badge-nav:hover {
+    background-color: var(--bg-card);
+    border-color: #0d9488;
+}
+
+.dark-theme .profile-badge-nav:hover {
+    border-color: #2dd4bf;
+}
+
 
 .avatar-letter {
     width: 28px;
@@ -181,6 +194,16 @@
     align-items: center;
     justify-content: center;
 }
+
+.avatar-image-nav {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
 
 .profile-label {
     font-size: 0.82rem;

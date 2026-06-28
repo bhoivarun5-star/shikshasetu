@@ -1,0 +1,119 @@
+/* Template 6: Bold Coral */
+.template-6 .ats-resume-sheet {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: #334155;
+    line-height: 1.5;
+    padding: 0 !important;
+}
+
+.template-6 .ats-header {
+    background: #f43f5e;
+    color: #ffffff;
+    padding: 2.5rem 3rem;
+    margin-bottom: 1.5rem;
+}
+
+.template-6 .ats-name {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.25rem;
+}
+
+.template-6 .ats-title {
+    font-size: 1.15rem;
+    font-weight: 500;
+    color: #ffe4e6;
+    margin-bottom: 1rem;
+}
+
+.template-6 .ats-contact-row {
+    font-size: 0.85rem;
+    color: #ffe4e6;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+}
+
+.template-6 .ats-contact-row span {
+    display: flex;
+    align-items: center;
+}
+
+.template-6 .ats-body-content {
+    padding: 0 3rem 3rem 3rem;
+}
+
+.template-6 .ats-section {
+    margin-bottom: 1.5rem;
+}
+
+.template-6 .ats-sec-title {
+    font-size: 1rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #e11d48;
+    border-bottom: 2px solid #ffe4e6;
+    padding-bottom: 0.25rem;
+    margin-bottom: 0.75rem;
+}
+
+.template-6 .ats-summary-text {
+    font-size: 0.9rem;
+    color: #475569;
+}
+
+.template-6 .ats-skills-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.template-6 .ats-skill-pill {
+    background: #fff1f2;
+    color: #e11d48;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.25rem 0.65rem;
+    border-radius: 4px;
+}
+
+.template-6 .ats-experience-block,
+.template-6 .ats-education-block,
+.template-6 .ats-project-block {
+    margin-bottom: 1rem;
+}
+
+.template-6 .ats-block-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 0.15rem;
+}
+
+.template-6 .ats-block-title {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #1e293b;
+}
+
+.template-6 .ats-block-subtitle {
+    font-size: 0.875rem;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.template-6 .ats-block-date {
+    font-size: 0.825rem;
+    color: #f43f5e;
+    font-weight: 700;
+    margin-left: auto;
+}
+
+.template-6 .ats-block-desc {
+    font-size: 0.875rem;
+    color: #475569;
+    white-space: pre-line;
+}

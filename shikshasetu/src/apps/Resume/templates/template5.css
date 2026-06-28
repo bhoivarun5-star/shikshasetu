@@ -1,0 +1,135 @@
+/* Template 5: Developer Monospace */
+.template-5 .ats-resume-sheet {
+    font-family: 'Courier New', Courier, monospace;
+    color: #0f172a;
+    line-height: 1.4;
+    padding: 2.5rem;
+    font-size: 0.85rem;
+}
+
+.template-5 .ats-header {
+    border: 2px dashed #0f172a;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.template-5 .ats-name {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #10b981;
+    margin-bottom: 0.15rem;
+}
+
+.template-5 .ats-name::before {
+    content: "const name = '";
+}
+
+.template-5 .ats-name::after {
+    content: "';";
+}
+
+.template-5 .ats-title {
+    font-size: 1rem;
+    color: #64748b;
+    margin-bottom: 0.75rem;
+    font-weight: bold;
+}
+
+.template-5 .ats-title::before {
+    content: "role: '";
+}
+
+.template-5 .ats-title::after {
+    content: "',";
+}
+
+.template-5 .ats-contact-row {
+    font-size: 0.8rem;
+    color: #475569;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    margin-top: 0.5rem;
+}
+
+.template-5 .ats-contact-row span::before {
+    content: "// ";
+}
+
+.template-5 .ats-section {
+    margin-bottom: 1.5rem;
+}
+
+.template-5 .ats-sec-title {
+    font-size: 0.95rem;
+    font-weight: bold;
+    color: #0f172a;
+    background: #e2e8f0;
+    padding: 0.2rem 0.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.template-5 .ats-sec-title::before {
+    content: "< ";
+}
+
+.template-5 .ats-sec-title::after {
+    content: " >";
+}
+
+.template-5 .ats-summary-text {
+    color: #334155;
+}
+
+.template-5 .ats-skills-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.template-5 .ats-skill-pill {
+    background: #ecfdf5;
+    color: #065f46;
+    border: 1px solid #a7f3d0;
+    padding: 0.1rem 0.4rem;
+    font-size: 0.775rem;
+}
+
+.template-5 .ats-experience-block,
+.template-5 .ats-education-block,
+.template-5 .ats-project-block {
+    margin-bottom: 1rem;
+    border-left: 2px solid #cbd5e1;
+    padding-left: 0.75rem;
+}
+
+.template-5 .ats-block-header {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0.25rem;
+}
+
+.template-5 .ats-block-title {
+    font-weight: bold;
+    font-size: 0.875rem;
+    color: #0f172a;
+}
+
+.template-5 .ats-block-subtitle {
+    font-size: 0.825rem;
+    color: #475569;
+}
+
+.template-5 .ats-block-date {
+    font-size: 0.8rem;
+    color: #10b981;
+    margin-top: 0.1rem;
+    font-weight: bold;
+}
+
+.template-5 .ats-block-desc {
+    font-size: 0.825rem;
+    color: #334155;
+    white-space: pre-line;
+    margin-top: 0.25rem;
+}

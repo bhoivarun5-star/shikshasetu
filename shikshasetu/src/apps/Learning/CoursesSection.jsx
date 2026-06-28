@@ -1,4 +1,4 @@
-import { Video, Search, X, Play, Clock, Compass, ExternalLink, Loader2, Sparkles } from "lucide-react";
+import { Video, Search, X, Play, Clock, Compass, ExternalLink, Loader2, Sparkles, ArrowRight } from "lucide-react";
 
 export default function CoursesSection({
     t,
@@ -14,7 +14,8 @@ export default function CoursesSection({
     isExploring,
     exploreError,
     exploreCourses,
-    fetchAICourses
+    fetchAICourses,
+    onAttemptAssessment
 }) {
     return (
         <div className="courses-tab-view">
@@ -95,6 +96,24 @@ export default function CoursesSection({
                                 </div>
                                 <span className="text-xs font-semibold text-slate-500">{video.percentage}% Completed</span>
                             </div>
+                            
+                            {video.percentage === 100 && (
+                                <div className="mt-2 flex items-center justify-between p-2 bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-100 dark:border-emerald-900 rounded-xl" onClick={(e) => e.stopPropagation()}>
+                                    <span className="text-xs text-emerald-700 dark:text-emerald-300 font-medium">Ready for Assessment!</span>
+                                    <button 
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            if (onAttemptAssessment) {
+                                                onAttemptAssessment(video);
+                                            }
+                                        }}
+                                        className="py-1 px-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-semibold flex items-center gap-1 border-none cursor-pointer"
+                                    >
+                                        <span>Go</span>
+                                        <ArrowRight size={12} />
+                                    </button>
+                                </div>
+                            )}
                             
                             <div className="card-footer mt-4 flex justify-between items-center w-full">
                                 <span className="card-meta flex items-center gap-1 text-xs text-slate-500">

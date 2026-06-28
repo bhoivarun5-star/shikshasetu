@@ -1,0 +1,112 @@
+/* Template 4: Classic Academic (Times New Roman) */
+.template-4 .ats-resume-sheet {
+    font-family: 'Times New Roman', Times, serif;
+    color: #111111;
+    line-height: 1.5;
+    padding: 3rem;
+}
+
+.template-4 .ats-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.template-4 .ats-name {
+    font-size: 2.25rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #000000;
+    margin-bottom: 0.25rem;
+}
+
+.template-4 .ats-title {
+    font-size: 1rem;
+    font-weight: bold;
+    letter-spacing: 0.05em;
+    color: #333333;
+    margin-bottom: 0.5rem;
+}
+
+.template-4 .ats-contact-row {
+    font-size: 0.85rem;
+    color: #333333;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
+    padding: 0.35rem 0;
+}
+
+.template-4 .ats-section {
+    margin-bottom: 1.5rem;
+}
+
+.template-4 .ats-sec-title {
+    font-size: 0.95rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #000000;
+    border-bottom: 1px solid #000000;
+    padding-bottom: 0.15rem;
+    margin-bottom: 0.5rem;
+}
+
+.template-4 .ats-summary-text {
+    font-size: 0.875rem;
+    text-align: justify;
+}
+
+.template-4 .ats-skills-grid {
+    font-size: 0.875rem;
+}
+
+.template-4 .ats-skill-pill {
+    margin-right: 0.5rem;
+}
+
+.template-4 .ats-skill-pill::after {
+    content: ",";
+}
+
+.template-4 .ats-skill-pill:last-child::after {
+    content: "";
+}
+
+.template-4 .ats-experience-block,
+.template-4 .ats-education-block,
+.template-4 .ats-project-block {
+    margin-bottom: 1rem;
+}
+
+.template-4 .ats-block-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.template-4 .ats-block-title {
+    font-weight: bold;
+}
+
+.template-4 .ats-block-subtitle {
+    font-weight: normal;
+    font-style: italic;
+    margin-left: 0.5rem;
+}
+
+.template-4 .ats-block-date {
+    font-size: 0.85rem;
+    margin-left: auto;
+}
+
+.template-4 .ats-block-desc {
+    font-size: 0.875rem;
+    text-align: justify;
+    white-space: pre-line;
+    margin-top: 0.15rem;
+}

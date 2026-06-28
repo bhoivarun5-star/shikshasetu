@@ -1,0 +1,107 @@
+/* Template 2: Professional Executive (Navy Blue) */
+.template-2 .ats-resume-sheet {
+    font-family: 'Georgia', serif;
+    color: #1e293b;
+    line-height: 1.6;
+}
+
+.template-2 .ats-header {
+    text-align: center;
+    border-bottom: 2px double #1e3a8a;
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.template-2 .ats-name {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1e3a8a;
+    margin-bottom: 0.25rem;
+}
+
+.template-2 .ats-title {
+    font-size: 1.15rem;
+    font-style: italic;
+    color: #475569;
+    margin-bottom: 0.5rem;
+}
+
+.template-2 .ats-contact-row {
+    font-size: 0.85rem;
+    color: #475569;
+    display: flex;
+    justify-content: center;
+    gap: 1.25rem;
+}
+
+.template-2 .ats-section {
+    margin-bottom: 1.75rem;
+}
+
+.template-2 .ats-sec-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1e3a8a;
+    border-bottom: 1px solid #1e3a8a;
+    padding-bottom: 0.2rem;
+    margin-bottom: 0.75rem;
+}
+
+.template-2 .ats-summary-text {
+    font-size: 0.9rem;
+    color: #334155;
+    text-align: justify;
+}
+
+.template-2 .ats-skills-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.template-2 .ats-skill-pill {
+    border: 1px solid #cbd5e1;
+    color: #1e3a8a;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.2rem 0.5rem;
+}
+
+.template-2 .ats-experience-block,
+.template-2 .ats-education-block,
+.template-2 .ats-project-block {
+    margin-bottom: 1.25rem;
+}
+
+.template-2 .ats-block-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 0.15rem;
+}
+
+.template-2 .ats-block-title {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #0f172a;
+}
+
+.template-2 .ats-block-subtitle {
+    font-size: 0.9rem;
+    color: #475569;
+    font-style: italic;
+}
+
+.template-2 .ats-block-date {
+    font-size: 0.85rem;
+    color: #475569;
+    font-weight: 600;
+    margin-left: auto;
+}
+
+.template-2 .ats-block-desc {
+    font-size: 0.875rem;
+    color: #334155;
+    white-space: pre-line;
+    margin-top: 0.25rem;
+}

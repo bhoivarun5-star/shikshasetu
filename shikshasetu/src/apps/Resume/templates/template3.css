@@ -1,0 +1,142 @@
+/* Template 3: Creative Designer (Teal/Emerald) */
+.template-3 .ats-resume-sheet {
+    font-family: 'Inter', sans-serif;
+    color: #334155;
+    line-height: 1.5;
+    padding: 0 !important;
+}
+
+.template-3 .resume-grid-container {
+    display: grid;
+    grid-template-columns: 230px 1fr;
+    min-height: 1123px;
+}
+
+.template-3 .resume-left-column {
+    background: #0f766e;
+    color: #e0f2fe;
+    padding: 2.5rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.template-3 .resume-right-column {
+    padding: 2.5rem 2rem;
+    background: #ffffff;
+}
+
+/* Sidebar Styling */
+.template-3 .sidebar-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #5eead4;
+    border-bottom: 1px solid #115e59;
+    padding-bottom: 0.35rem;
+    margin-bottom: 0.75rem;
+}
+
+.template-3 .ats-contact-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    font-size: 0.85rem;
+}
+
+.template-3 .ats-contact-row span {
+    word-break: break-all;
+}
+
+.template-3 .ats-skills-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.template-3 .ats-skill-pill {
+    background: #115e59;
+    color: #ccfbf1;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    text-align: center;
+}
+
+/* Main Content Styling */
+.template-3 .ats-header {
+    margin-bottom: 1.5rem;
+}
+
+.template-3 .ats-name {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: #0f766e;
+    margin-bottom: 0.25rem;
+}
+
+.template-3 .ats-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #475569;
+}
+
+.template-3 .ats-section {
+    margin-bottom: 1.5rem;
+}
+
+.template-3 .ats-sec-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #0f766e;
+    border-bottom: 2px solid #f0fdfa;
+    padding-bottom: 0.25rem;
+    margin-bottom: 0.75rem;
+}
+
+.template-3 .ats-summary-text {
+    font-size: 0.875rem;
+    color: #475569;
+}
+
+.template-3 .ats-experience-block,
+.template-3 .ats-education-block,
+.template-3 .ats-project-block {
+    margin-bottom: 1rem;
+}
+
+.template-3 .ats-block-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 0.15rem;
+}
+
+.template-3 .ats-block-title {
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: #1e293b;
+}
+
+.template-3 .ats-block-subtitle {
+    font-size: 0.85rem;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.template-3 .ats-block-date {
+    font-size: 0.8rem;
+    color: #0f766e;
+    font-weight: 600;
+    margin-left: auto;
+}
+
+.template-3 .ats-block-desc {
+    font-size: 0.85rem;
+    color: #475569;
+    white-space: pre-line;
+}

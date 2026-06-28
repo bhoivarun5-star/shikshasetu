@@ -1,0 +1,136 @@
+/* Template 8: Startup Violet */
+.template-8 .ats-resume-sheet {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: #4b5563;
+    line-height: 1.5;
+    padding: 3rem;
+}
+
+.template-8 .ats-header {
+    background: #f5f3ff;
+    border: 1px solid #ddd6fe;
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+}
+
+.template-8 .ats-header-info {
+    flex: 1;
+    min-width: 250px;
+}
+
+.template-8 .ats-name {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: #4c1d95;
+    letter-spacing: -0.025em;
+    margin-bottom: 0.25rem;
+}
+
+.template-8 .ats-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #7c3aed;
+}
+
+.template-8 .ats-contact-row {
+    font-size: 0.825rem;
+    color: #6b7280;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.template-8 .ats-section {
+    margin-bottom: 1.75rem;
+}
+
+.template-8 .ats-sec-title {
+    font-size: 1rem;
+    font-weight: 800;
+    color: #4c1d95;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.template-8 .ats-sec-title::after {
+    content: "";
+    flex-grow: 1;
+    height: 2px;
+    background: #ddd6fe;
+}
+
+.template-8 .ats-summary-text {
+    font-size: 0.875rem;
+    color: #4b5563;
+    background: #fafafa;
+    padding: 1rem;
+    border-radius: 8px;
+    border-left: 3px solid #7c3aed;
+}
+
+.template-8 .ats-skills-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+.template-8 .ats-skill-pill {
+    background: #7c3aed;
+    color: #ffffff;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.25rem 0.65rem;
+    border-radius: 9999px;
+}
+
+.template-8 .ats-experience-block,
+.template-8 .ats-education-block,
+.template-8 .ats-project-block {
+    background: #ffffff;
+    border: 1px solid #f3f4f6;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    transition: all 0.2s;
+}
+
+.template-8 .ats-block-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 0.25rem;
+}
+
+.template-8 .ats-block-title {
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: #1f2937;
+}
+
+.template-8 .ats-block-subtitle {
+    font-size: 0.85rem;
+    color: #7c3aed;
+    font-weight: 600;
+}
+
+.template-8 .ats-block-date {
+    font-size: 0.8rem;
+    color: #9ca3af;
+    font-weight: 500;
+    margin-left: auto;
+}
+
+.template-8 .ats-block-desc {
+    font-size: 0.85rem;
+    color: #4b5563;
+    white-space: pre-line;
+    margin-top: 0.25rem;
+}

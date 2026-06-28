@@ -3,9 +3,30 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from .models import Profile, CourseVideo, VideoProgress
+from .models import Profile, CourseVideo, VideoProgress, CourseBadge
 
 # Create your views here.
+
+import random
+
+def generate_unique_username(email, first_name=""):
+    base = ""
+    if email:
+        base = email.split('@')[0]
+    elif first_name:
+        base = "".join(c for c in first_name if c.isalnum()).lower()
+    else:
+        base = "user"
+        
+    base = base[:20]
+    
+    username = base
+    # Check uniqueness
+    while Profile.objects.filter(username__iexact=username).exists() or User.objects.filter(username__iexact=username).exists():
+        username = f"{base}_{random.randint(100, 999)}"
+        
+    return username
+
 
 @csrf_exempt
 def register_view(request):
@@ -31,7 +52,8 @@ def register_view(request):
         user.save()
         
         # Create Profile
-        Profile.objects.create(user=user, mobile_number=mobile_number)
+        username = generate_unique_username(email, full_name)
+        Profile.objects.create(user=user, mobile_number=mobile_number, username=username)
         
         return JsonResponse({'success': True, 'message': 'User registered successfully.'}, status=201)
         
@@ -63,11 +85,13 @@ def login_view(request):
             mobile_number = ''
             bio = ''
             skills = ''
+            profile_image = ''
             try:
                 if hasattr(user, 'profile'):
                     mobile_number = user.profile.mobile_number
                     bio = user.profile.bio
                     skills = user.profile.skills
+                    profile_image = getattr(user.profile, 'profile_image', '') or ''
             except Exception:
                 pass
 
@@ -79,7 +103,8 @@ def login_view(request):
                     'fullName': user.first_name,
                     'mobileNumber': mobile_number,
                     'bio': bio,
-                    'skills': skills
+                    'skills': skills,
+                    'profile_image': profile_image
                 }
             }, status=200)
         else:
@@ -97,11 +122,13 @@ def user_status_view(request):
         mobile_number = ''
         bio = ''
         skills = ''
+        profile_image = ''
         try:
             if hasattr(request.user, 'profile'):
                 mobile_number = request.user.profile.mobile_number
                 bio = request.user.profile.bio
                 skills = request.user.profile.skills
+                profile_image = getattr(request.user.profile, 'profile_image', '') or ''
         except Exception:
             pass
         return JsonResponse({
@@ -111,10 +138,12 @@ def user_status_view(request):
                 'fullName': request.user.first_name,
                 'mobileNumber': mobile_number,
                 'bio': bio,
-                'skills': skills
+                'skills': skills,
+                'profile_image': profile_image
             }
         })
     return JsonResponse({'success': False, 'message': 'Not authenticated.'}, status=401)
+
 
 
 @csrf_exempt
@@ -134,21 +163,44 @@ def profile_view(request):
         mobile_number = ''
         bio = ''
         skills = ''
+        profile_image = ''
+        username = ''
         try:
-            if hasattr(request.user, 'profile'):
-                mobile_number = request.user.profile.mobile_number
-                bio = request.user.profile.bio
-                skills = request.user.profile.skills
+            profile, created = Profile.objects.get_or_create(user=request.user)
+            mobile_number = profile.mobile_number or ''
+            bio = profile.bio or ''
+            skills = profile.skills or ''
+            profile_image = getattr(profile, 'profile_image', '') or ''
+            
+            if not profile.username:
+                profile.username = generate_unique_username(request.user.email, request.user.first_name)
+                profile.save()
+            username = profile.username
         except Exception:
             pass
+        badges = []
+        try:
+            badges_qs = CourseBadge.objects.filter(user=request.user)
+            for b in badges_qs:
+                badges.append({
+                    'course_title': b.course_title,
+                    'badge_name': b.badge_name,
+                    'earned_at': b.earned_at.strftime('%Y-%m-%d')
+                })
+        except Exception:
+            pass
+
         return JsonResponse({
             'success': True,
             'profile': {
                 'name': request.user.first_name,
                 'email': request.user.email,
+                'username': username,
                 'phone': mobile_number,
                 'bio': bio,
-                'skills': skills
+                'skills': skills,
+                'profile_image': profile_image,
+                'badges': badges
             }
         })
         
@@ -159,6 +211,7 @@ def profile_view(request):
             phone = data.get('phone', '')
             bio = data.get('bio', '')
             skills = data.get('skills', '')
+            profile_image = data.get('profile_image', '')
             
             # Update User
             user = request.user
@@ -170,6 +223,7 @@ def profile_view(request):
             profile.mobile_number = phone
             profile.bio = bio
             profile.skills = skills
+            profile.profile_image = profile_image
             profile.save()
             
             return JsonResponse({'success': True, 'message': 'Profile updated successfully.'})
@@ -179,6 +233,7 @@ def profile_view(request):
             return JsonResponse({'success': False, 'message': str(e)}, status=500)
             
     return JsonResponse({'success': False, 'message': 'Method not allowed.'}, status=405)
+
 
 
 @csrf_exempt
@@ -351,5 +406,79 @@ def admin_videos_view(request):
             return JsonResponse({'success': False, 'message': str(e)}, status=500)
             
     return JsonResponse({'success': False, 'message': 'Method not allowed.'}, status=405)
+
+
+@csrf_exempt
+def add_badge_view(request):
+    if not request.user.is_authenticated:
+        return JsonResponse({'success': False, 'message': 'Not authenticated.'}, status=401)
+        
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            course_title = data.get('course_title')
+            badge_name = data.get('badge_name')
+            
+            if not course_title or not badge_name:
+                return JsonResponse({'success': False, 'message': 'course_title and badge_name are required.'}, status=400)
+                
+            badge, created = CourseBadge.objects.get_or_create(
+                user=request.user,
+                course_title=course_title,
+                defaults={'badge_name': badge_name}
+            )
+            return JsonResponse({'success': True, 'message': 'Badge recorded successfully.', 'created': created})
+        except Exception as e:
+            return JsonResponse({'success': False, 'message': str(e)}, status=500)
+            
+    return JsonResponse({'success': False, 'message': 'Method not allowed.'}, status=405)
+
+
+@csrf_exempt
+def search_profile_view(request):
+    if not request.user.is_authenticated:
+        return JsonResponse({'success': False, 'message': 'Not authenticated.'}, status=401)
+        
+    if request.method == 'GET':
+        username = request.GET.get('username')
+        if not username:
+            return JsonResponse({'success': False, 'message': 'Username is required.'}, status=400)
+            
+        try:
+            profile = Profile.objects.get(username__iexact=username)
+            user = profile.user
+            
+            # Fetch badges
+            badges = []
+            try:
+                badges_qs = CourseBadge.objects.filter(user=user)
+                for b in badges_qs:
+                    badges.append({
+                        'course_title': b.course_title,
+                        'badge_name': b.badge_name,
+                        'earned_at': b.earned_at.strftime('%Y-%m-%d')
+                    })
+            except Exception:
+                pass
+                
+            return JsonResponse({
+                'success': True,
+                'profile': {
+                    'name': user.first_name,
+                    'username': profile.username,
+                    'phone': profile.mobile_number or '',
+                    'bio': profile.bio or '',
+                    'skills': profile.skills or '',
+                    'profile_image': profile.profile_image or '',
+                    'badges': badges
+                }
+            })
+        except Profile.DoesNotExist:
+            return JsonResponse({'success': False, 'message': 'Profile not found.'}, status=404)
+            
+    return JsonResponse({'success': False, 'message': 'Method not allowed.'}, status=405)
+
+
+
 
 

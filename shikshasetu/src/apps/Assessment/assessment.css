@@ -518,3 +518,27 @@
     }
 }
 
+/* Custom Assessment Loading & Error States */
+.loading-state, .error-state {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 350px;
+    animation: fadeInUp 0.4s ease;
+}
+
+.loading-card h3, .error-card h3 {
+    margin-top: 1rem;
+    font-size: 1.35rem;
+    font-weight: 750;
+    color: var(--text-main);
+}
+
+.loading-card p, .error-card p {
+    color: var(--text-light);
+    font-size: 0.92rem;
+    line-height: 1.5;
+    margin-top: 0.5rem;
+}
+
+

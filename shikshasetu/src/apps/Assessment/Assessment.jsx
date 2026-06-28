@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { 
     Award, 
     CheckCircle2, 
@@ -8,7 +8,9 @@ import {
     FileText, 
     XCircle, 
     ArrowLeft, 
-    HelpCircle 
+    HelpCircle,
+    Loader2,
+    AlertCircle
 } from "lucide-react";
 import "./assessment.css";
 
@@ -30,12 +32,154 @@ const MOCK_QUESTIONS = {
     ]
 };
 
-export default function Assessment() {
+export default function Assessment({ assessmentCourse, clearAssessmentCourse, onBadgeEarned }) {
     const [quizState, setQuizState] = useState("list"); // "list" | "quiz" | "result"
     const [activeTest, setActiveTest] = useState(null);
     const [currentIdx, setCurrentIdx] = useState(0);
     const [selectedAnswers, setSelectedAnswers] = useState({});
     const [score, setScore] = useState(0);
+    const [customQuestions, setCustomQuestions] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState("");
+
+    useEffect(() => {
+        if (assessmentCourse) {
+            const generateAndStart = async () => {
+                setIsLoading(true);
+                setError("");
+                setQuizState("list");
+                
+                try {
+                    const prompt = `Generate a skills assessment for the course: "${assessmentCourse.title}".
+It must have exactly 15 multiple choice questions.
+Each question must have exactly 4 options.
+Format the output strictly as a JSON array where each object has:
+- "q": The question text (string).
+- "options": An array of exactly 4 options (strings).
+- "ans": The 0-indexed integer of the correct option (0, 1, 2, or 3).
+
+Do not output any introductory or concluding text, only the raw JSON.`;
+
+                    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+                        method: "POST",
+                        headers: {
+                            "Authorization": "Bearer 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",
+                            "Content-Type": "application/json",
+                            "HTTP-Referer": "http://localhost:5173",
+                            "X-Title": "ShikshaSetu"
+                        },
+                        body: JSON.stringify({
+                            model: "openai/gpt-oss-20b:free",
+                            messages: [
+                                {
+                                    role: "user",
+                                    content: prompt
+                                }
+                            ]
+                        })
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`API returned status ${response.status}`);
+                    }
+
+                    const data = await response.json();
+                    let text = data.choices?.[0]?.message?.content?.trim();
+                    
+                    if (!text) {
+                        throw new Error("No response received from AI model.");
+                    }
+                    
+                    if (text.startsWith("```")) {
+                        text = text.replace(/^```json\s*/i, "").replace(/```$/, "").trim();
+                    }
+
+                    const parsed = JSON.parse(text);
+                    if (Array.isArray(parsed) && parsed.length > 0) {
+                        const formattedQuestions = parsed.map(q => ({
+                            q: q.q || "Question placeholder?",
+                            options: Array.isArray(q.options) && q.options.length >= 4 
+                                ? q.options.slice(0, 4) 
+                                : ["A", "B", "C", "D"],
+                            ans: typeof q.ans === 'number' && q.ans >= 0 && q.ans < 4 ? q.ans : 0
+                        }));
+                        
+                        // Ensure exactly 15 questions
+                        let finalQuestions = [...formattedQuestions];
+                        if (finalQuestions.length < 15) {
+                            while (finalQuestions.length < 15) {
+                                finalQuestions.push({
+                                    q: `Review question about ${assessmentCourse.category || 'course topic'}?`,
+                                    options: ["Option A", "Option B", "Option C", "Option D"],
+                                    ans: 0
+                                });
+                            }
+                        } else if (finalQuestions.length > 15) {
+                            finalQuestions = finalQuestions.slice(0, 15);
+                        }
+
+                        setCustomQuestions(finalQuestions);
+                        
+                        const test = {
+                            name: `${assessmentCourse.title} Assessment`,
+                            questions: 15,
+                            duration: "15 Mins",
+                            difficulty: "Mixed",
+                            topic: assessmentCourse.category || "General",
+                            isCustom: true
+                        };
+                        
+                        setActiveTest(test);
+                        setCurrentIdx(0);
+                        setSelectedAnswers({});
+                        setScore(0);
+                        setQuizState("quiz");
+                    } else {
+                        throw new Error("Failed to parse questions array.");
+                    }
+                } catch (err) {
+                    console.error("Error generating assessment:", err);
+                    setError(err.message || "Failed to generate assessment. Please try again.");
+                } finally {
+                    setIsLoading(false);
+                }
+            };
+            
+            generateAndStart();
+        }
+    }, [assessmentCourse]);
+
+    if (isLoading) {
+        return (
+            <div className="assessment-container loading-state">
+                <div className="loading-card text-center p-8 flex flex-col items-center">
+                    <Loader2 className="animate-spin text-[#e8773f] mb-4" size={48} />
+                    <h3 className="text-xl font-bold text-slate-800 dark:text-white">Generating Assessment</h3>
+                    <p className="text-slate-500 mt-2 text-center max-w-md">
+                        We are using AI to generate 15 customized assessment questions for <strong>{assessmentCourse?.title}</strong>. This might take a few moments...
+                    </p>
+                </div>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="assessment-container error-state">
+                <div className="error-card text-center p-8 flex flex-col items-center">
+                    <AlertCircle className="text-rose-500 mb-4" size={48} />
+                    <h3 className="text-xl font-bold text-rose-600">Generation Failed</h3>
+                    <p className="text-slate-500 mt-2 text-center max-w-md">{error}</p>
+                    <button className="action-btn-list mt-6 border-none cursor-pointer" onClick={() => {
+                        if (clearAssessmentCourse) clearAssessmentCourse();
+                        setError("");
+                    }}>
+                        Return to Assessments
+                    </button>
+                </div>
+            </div>
+        );
+    }
 
     const assessments = [
         { name: "JavaScript Core Basics", questions: 3, duration: "5 Mins", difficulty: "Beginner", topic: "JavaScript" },
@@ -59,7 +203,7 @@ export default function Assessment() {
     };
 
     const handleNext = () => {
-        const questionsList = MOCK_QUESTIONS[activeTest.name];
+        const questionsList = activeTest?.isCustom ? customQuestions : MOCK_QUESTIONS[activeTest.name];
         if (currentIdx < questionsList.length - 1) {
             setCurrentIdx(currentIdx + 1);
         } else {
@@ -70,18 +214,44 @@ export default function Assessment() {
                     correct++;
                 }
             });
+            const isPassed = correct >= (activeTest?.isCustom ? 8 : 2);
             setScore(correct);
             setQuizState("result");
+            
+            if (isPassed) {
+                const badgeTitle = activeTest.isCustom 
+                    ? `${assessmentCourse.title} Badge`
+                    : `${activeTest.name} Badge`;
+                    
+                fetch("/api/profile/badges/", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        course_title: activeTest.name,
+                        badge_name: badgeTitle
+                    })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success && onBadgeEarned) {
+                        onBadgeEarned();
+                    }
+                })
+                .catch(err => console.error("Error recording badge:", err));
+            }
         }
     };
 
     const handleBackToList = () => {
         setQuizState("list");
         setActiveTest(null);
+        if (clearAssessmentCourse) {
+            clearAssessmentCourse();
+        }
     };
 
     if (quizState === "quiz" && activeTest) {
-        const questionsList = MOCK_QUESTIONS[activeTest.name];
+        const questionsList = activeTest.isCustom ? customQuestions : MOCK_QUESTIONS[activeTest.name];
         const currentQuestion = questionsList[currentIdx];
         const progressPercentage = ((currentIdx + 1) / questionsList.length) * 100;
 
@@ -139,8 +309,8 @@ export default function Assessment() {
     }
 
     if (quizState === "result" && activeTest) {
-        const questionsList = MOCK_QUESTIONS[activeTest.name];
-        const passed = score >= 2;
+        const questionsList = activeTest.isCustom ? customQuestions : MOCK_QUESTIONS[activeTest.name];
+        const passed = score >= (activeTest.isCustom ? 8 : 2);
 
         return (
             <div className="assessment-container result-state-container">
