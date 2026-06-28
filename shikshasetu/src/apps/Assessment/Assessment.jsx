@@ -63,7 +63,7 @@ Do not output any introductory or concluding text, only the raw JSON.`;
                     const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
                         method: "POST",
                         headers: {
-                            "Authorization": "Bearer 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",
+                            "Authorization": `Bearer ${import.meta.env.VITE_OPENROUTER_API_KEY || ''}`,
                             "Content-Type": "application/json",
                             "HTTP-Referer": "http://localhost:5173",
                             "X-Title": "ShikshaSetu"

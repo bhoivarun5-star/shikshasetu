@@ -3,7 +3,7 @@ import { Send, Sparkles, MessageSquare, Loader2, User, Plus, Trash2, RotateCcw, 
 import "./ai.css";
 
 const API_URL = "https://openrouter.ai/api/v1/chat/completions";
-const API_KEY = "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";
+const API_KEY = import.meta.env.VITE_OPENROUTER_API_KEY || "";
 const MODEL_NAME = "openai/gpt-oss-20b:free";
 
 const SUGGESTIONS = [
