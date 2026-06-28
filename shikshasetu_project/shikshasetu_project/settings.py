@@ -174,10 +174,19 @@ else:
     ]
 CORS_ALLOW_CREDENTIALS = True
 
+# Dynamically allow all Vercel domains to avoid CORS issues on preview URLs
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^https://.*\.vercel\.app$",
+]
+
 # CSRF Trusted Origins
 csrf_trusted_env = os.environ.get('CSRF_TRUSTED_ORIGINS')
 if csrf_trusted_env:
     CSRF_TRUSTED_ORIGINS = [origin.strip() for origin in csrf_trusted_env.split(',')]
+else:
+    CSRF_TRUSTED_ORIGINS = [
+        'https://*.vercel.app',
+    ]
 
 # Production Security/Cookie Settings
 if not DEBUG:
