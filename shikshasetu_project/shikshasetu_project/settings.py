@@ -28,7 +28,12 @@ DEBUG = os.environ.get('DEBUG', 'True').lower() == 'true'
 
 allowed_hosts_env = os.environ.get('ALLOWED_HOSTS')
 if allowed_hosts_env:
-    ALLOWED_HOSTS = [host.strip() for host in allowed_hosts_env.split(',')]
+    ALLOWED_HOSTS = []
+    for host in allowed_hosts_env.split(','):
+        h = host.strip()
+        if h.startswith('*.'):
+            h = h[1:]  # Convert *.example.com to .example.com for Django compatibility
+        ALLOWED_HOSTS.append(h)
 else:
     ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]', '.onrender.com', '.vercel.app']
 
