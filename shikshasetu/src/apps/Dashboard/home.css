@@ -718,11 +718,45 @@
     .hero-left h2 {
         font-size: 2.2rem;
     }
+    
+    .portal-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 16px;
+    }
 }
 
 @media (max-width: 640px) {
+    .header-container {
+        padding: 0 16px;
+        height: 64px;
+    }
+    
+    .logo-text {
+        font-size: 1.35rem;
+    }
+    
     .portal-main {
-        padding: 24px 16px;
+        padding: 20px 16px;
+    }
+    
+    .hero-left h2 {
+        font-size: 1.8rem;
+    }
+    
+    .hero-ctas {
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+    }
+    
+    .cta-primary-btn, .cta-secondary-btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .portal-grid {
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 14px;
     }
     
     .editor-row {
@@ -843,3 +877,4 @@
     background-color: var(--bg-card);
     color: var(--text-main);
 }
+

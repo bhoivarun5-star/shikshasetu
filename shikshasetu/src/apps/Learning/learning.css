@@ -482,6 +482,40 @@
         width: 100%;
         justify-content: center;
     }
+    
+    .video-player-overlay {
+        padding: 12px;
+    }
+    
+    .video-player-container {
+        padding: 16px 12px;
+        border-radius: 16px;
+    }
+    
+    .video-player-footer {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+    
+    .video-player-footer .progress-info {
+        max-width: 100%;
+    }
+    
+    .roadmap-step-card {
+        padding: 12px 14px;
+        gap: 12px;
+    }
+    
+    .roadmap-generator-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .roadmap-generate-btn {
+        width: 100%;
+        justify-content: center;
+    }
 }
 
 /* Custom Course Video Streaming Player Styles */

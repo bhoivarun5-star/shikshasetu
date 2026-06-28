@@ -399,7 +399,17 @@
         background: transparent;
         border: none;
     }
+    
+    .resume-editor-panel {
+        padding: 1.25rem;
+    }
+    
+    .editor-form-row {
+        flex-direction: column;
+        gap: 1.25rem;
+    }
 }
+
 
 /* Print CSS Styles */
 @media print {

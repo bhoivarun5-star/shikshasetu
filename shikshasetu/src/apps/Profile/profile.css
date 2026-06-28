@@ -555,4 +555,56 @@
     background: #d6642d;
 }
 
+/* Responsive Overrides */
+@media (max-width: 640px) {
+    .student-profile-card {
+        padding: 1.5rem 1.25rem 1.25rem 1.25rem;
+        border-radius: 20px;
+    }
+    
+    .card-top-decoration {
+        height: 60px;
+    }
+    
+    .profile-search-dropdown-overlay {
+        top: 60px;
+        padding: 1rem;
+    }
+    
+    .profile-search-dropdown-overlay form {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .profile-search-dropdown-overlay form button {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .student-avatar-big {
+        width: 80px;
+        height: 80px;
+        font-size: 1.8rem;
+    }
+    
+    .earned-badges-grid {
+        grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+        gap: 0.5rem;
+    }
+    
+    .badge-item-card {
+        padding: 0.75rem 0.5rem;
+    }
+    
+    .badge-icon-wrapper {
+        width: 36px;
+        height: 36px;
+    }
+    
+    .badge-title-text {
+        font-size: 0.75rem;
+    }
+}
+
+
 

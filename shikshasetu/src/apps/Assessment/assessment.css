@@ -110,7 +110,8 @@
 
 .assessment-meta-list {
     display: flex;
-    gap: 1.25rem;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.25rem;
     margin-bottom: 1.5rem;
 }
 
@@ -540,5 +541,73 @@
     line-height: 1.5;
     margin-top: 0.5rem;
 }
+
+/* Responsive Overrides */
+@media (max-width: 768px) {
+    .assessment-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1.25rem;
+    }
+    
+    .assessment-card-styled {
+        padding: 1.25rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .assessment-container {
+        padding: 1.5rem 1.25rem;
+        margin: 1rem auto;
+        border-radius: 20px;
+    }
+    
+    .quiz-info-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .quiz-info-header h3 {
+        font-size: 1.2rem;
+    }
+    
+    .question-text {
+        font-size: 1.1rem;
+        margin-bottom: 1.25rem;
+    }
+    
+    .option-btn {
+        padding: 0.85rem 1rem;
+        gap: 12px;
+        font-size: 0.9rem;
+    }
+    
+    .option-letter {
+        width: 24px;
+        height: 24px;
+        font-size: 0.8rem;
+    }
+    
+    .result-score-summary {
+        padding: 1.25rem 1rem;
+    }
+    
+    .score-details-row {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .result-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .action-btn-retry, .action-btn-list {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
 
 

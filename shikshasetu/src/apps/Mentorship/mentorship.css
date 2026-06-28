@@ -278,3 +278,35 @@
 .confirm-booking-btn:hover {
     background: var(--color-brand-hover);
 }
+
+/* Responsive Overrides */
+@media (max-width: 768px) {
+    .mentorship-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1.25rem;
+    }
+    
+    .mentor-card-styled {
+        padding: 1.25rem;
+    }
+    
+    .booking-success-alert-card {
+        padding: 1.25rem;
+        padding-right: 2.5rem;
+        gap: 0.75rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .mentor-card-footer {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+    
+    .book-session-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+

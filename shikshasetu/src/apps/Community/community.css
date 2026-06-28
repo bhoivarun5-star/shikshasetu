@@ -527,4 +527,60 @@
     background: rgba(79, 70, 229, 0.04);
 }
 
+/* Responsive Overrides */
+@media (max-width: 640px) {
+    .forum-card-styled {
+        padding: 1.25rem 1rem;
+        gap: 1rem;
+    }
+    
+    .forum-card-main {
+        gap: 0.75rem;
+    }
+    
+    .author-avatar-badge {
+        width: 36px;
+        height: 36px;
+        font-size: 0.85rem;
+    }
+    
+    .forum-card-title {
+        font-size: 1.05rem;
+    }
+    
+    .forum-card-footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+    
+    .forum-stats-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .modal-overlay {
+        padding: 1rem;
+    }
+    
+    .modal-dialog-box {
+        padding: 1.25rem;
+        border-radius: 20px;
+    }
+    
+    .replies-dialog-box {
+        max-height: 90vh;
+    }
+    
+    .reply-row-card {
+        padding: 0.75rem;
+    }
+    
+    .reply-row-content {
+        padding-left: 0;
+        margin-top: 4px;
+    }
+}
+
+
 
