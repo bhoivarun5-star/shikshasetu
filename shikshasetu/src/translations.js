@@ -12,6 +12,7 @@ export const translations = {
     mentorship: "Mentor Connect",
     profile: "Profile",
     logout: "Log Out",
+    language: "Language",
     
     // Hero Section
     hero_badge: "SHIKSHASETU PORTAL",
@@ -115,6 +116,7 @@ export const translations = {
     mentorship: "मेंटर कनेक्ट",
     profile: "प्रोफ़ाइल",
     logout: "लॉग आउट",
+    language: "भाषा",
 
     // Hero Section
     hero_badge: "शिक्षासेतु पोर्टल",
@@ -218,6 +220,7 @@ export const translations = {
     mentorship: "मेंटर कनेक्ट",
     profile: "प्रोफाइल",
     logout: "लॉग आउट",
+    language: "भाषा",
 
     // Hero Section
     hero_badge: "शिक्षासेतू पोर्टल",

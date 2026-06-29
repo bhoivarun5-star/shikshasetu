@@ -371,6 +371,25 @@ export default function Home({ user = null, onLogout = () => {}, language = "en"
                                 </button>
                             );
                         })}
+
+                        {/* Mobile Language Selector */}
+                        <div className="mobile-language-selector-row">
+                            <span className="mobile-language-label">{t("language")}</span>
+                            <select
+                                value={language}
+                                onChange={(e) => {
+                                    setLanguage(e.target.value);
+                                    setMobileMenuOpen(false);
+                                }}
+                                className="language-selector-select mobile-select"
+                                aria-label="Select Language"
+                            >
+                                <option value="en">English</option>
+                                <option value="hi">हिंदी</option>
+                                <option value="mr">मराठी</option>
+                            </select>
+                        </div>
+
                         {user && (
                             <button
                                 onClick={() => {
