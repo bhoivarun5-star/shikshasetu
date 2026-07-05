@@ -348,7 +348,7 @@ export default function Home({ user = null, onLogout = () => {}, language = "en"
                                                             setLearningSubTab(subItem.subId);
                                                             setMobileMenuOpen(false);
                                                         }}
-                                                        className="mobile-sub-link py-2 text-left text-sm text-slate-500 hover:text-slate-955"
+                                                        className="mobile-sub-link py-2 text-left text-sm text-slate-500 hover:text-indigo-600"
                                                     >
                                                         {t(subItem.subId)}
                                                     </button>

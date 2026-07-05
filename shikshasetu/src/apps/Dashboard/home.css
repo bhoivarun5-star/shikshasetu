@@ -696,132 +696,6 @@
     }
 }
 
-/* Responsive Overrides */
-@media (max-width: 1024px) {
-    .desktop-nav {
-        display: none;
-    }
-    
-    .mobile-hamburger {
-        display: block;
-    }
-
-    .language-selector-container {
-        display: none;
-    }
-
-    .logout-action-btn {
-        display: none;
-    }
-
-    .profile-label {
-        display: none;
-    }
-
-    .profile-badge-nav {
-        padding: 4px;
-    }
-
-    .mobile-language-selector-row {
-        display: flex;
-    }
-    
-    .hero-banner {
-        flex-direction: column;
-        text-align: center;
-        gap: 30px;
-    }
-    
-    .hero-left {
-        align-items: center;
-    }
-    
-    .hero-left p {
-        margin-left: auto;
-        margin-right: auto;
-    }
-    
-    .resume-builder-container {
-        flex-direction: column;
-    }
-    
-    .resume-preview {
-        position: static;
-        width: 100%;
-    }
-}
-
-@media (max-width: 768px) {
-    .hero-left h2 {
-        font-size: 2.2rem;
-    }
-    
-    .portal-grid {
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        gap: 16px;
-    }
-}
-
-@media (max-width: 640px) {
-    .header-container {
-        padding: 0 16px;
-        height: 64px;
-        gap: 8px;
-    }
-
-    .header-actions {
-        gap: 8px;
-    }
-    
-    .logo-text {
-        font-size: 1.25rem;
-    }
-
-    .avatar-letter, .avatar-image-nav {
-        width: 32px;
-        height: 32px;
-    }
-
-    .profile-badge-nav {
-        border: none;
-        background-color: transparent;
-        padding: 0;
-    }
-
-    .theme-action-btn {
-        width: 36px;
-        height: 36px;
-    }
-    
-    .portal-main {
-        padding: 20px 16px;
-    }
-    
-    .hero-left h2 {
-        font-size: 1.8rem;
-    }
-    
-    .hero-ctas {
-        flex-direction: column;
-        width: 100%;
-        gap: 10px;
-    }
-    
-    .cta-primary-btn, .cta-secondary-btn {
-        width: 100%;
-        justify-content: center;
-    }
-    
-    .portal-grid {
-        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-        gap: 14px;
-    }
-    
-    .editor-row {
-        flex-direction: column;
-        gap: 16px;
-    }
-}
 
 /* Nav Hover Dropdown Menu styles */
 .nav-dropdown-wrapper {
@@ -934,5 +808,146 @@
 .language-selector-select option {
     background-color: var(--bg-card);
     color: var(--text-main);
+}
+
+/* Responsive Overrides (declared at the end to ensure correct cascade override behavior) */
+@media (max-width: 1024px) {
+    .desktop-nav {
+        display: none !important;
+    }
+    
+    .mobile-hamburger {
+        display: block !important;
+    }
+
+    .language-selector-container {
+        display: none !important;
+    }
+
+    .logout-action-btn {
+        display: none !important;
+    }
+
+    .profile-label {
+        display: none !important;
+    }
+
+    .profile-badge-nav {
+        padding: 4px;
+    }
+
+    .mobile-language-selector-row {
+        display: flex !important;
+    }
+    
+    .hero-banner {
+        flex-direction: column;
+        text-align: center;
+        gap: 30px;
+    }
+    
+    .hero-left {
+        align-items: center;
+    }
+    
+    .hero-left p {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .resume-builder-container {
+        flex-direction: column;
+    }
+    
+    .resume-preview {
+        position: static;
+        width: 100%;
+    }
+
+    /* Keep absolute dropdown menu from overflowing right edge of screen on tablets/wider touch viewports */
+    .nav-dropdown-menu {
+        left: auto !important;
+        right: 0 !important;
+        transform: translateY(10px) !important;
+    }
+    .nav-dropdown-wrapper:hover .nav-dropdown-menu {
+        transform: translateY(0) !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-left h2 {
+        font-size: 2.2rem;
+    }
+    
+    .portal-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 16px;
+    }
+}
+
+@media (max-width: 640px) {
+    .header-container {
+        padding: 0 12px;
+        height: 54px; /* Reduced header height for a slightly smaller navbar */
+        gap: 8px;
+    }
+
+    .header-actions {
+        gap: 6px;
+    }
+    
+    .logo-text {
+        font-size: 1.15rem; /* Slightly smaller logo text */
+    }
+
+    .avatar-letter, .avatar-image-nav {
+        width: 28px; /* Slightly smaller avatar */
+        height: 28px;
+    }
+
+    .profile-badge-nav {
+        border: none;
+        background-color: transparent;
+        padding: 0;
+    }
+
+    .theme-action-btn {
+        width: 32px; /* Slightly smaller theme toggle button */
+        height: 32px;
+    }
+    
+    .mobile-hamburger {
+        padding: 4px;
+    }
+    
+    .portal-main {
+        padding: 16px 12px;
+    }
+    
+    .hero-left h2 {
+        font-size: 1.8rem;
+    }
+    
+    .hero-ctas {
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+    }
+    
+    .cta-primary-btn, .cta-secondary-btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .portal-grid {
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 14px;
+    }
+    
+    .editor-row {
+        flex-direction: column;
+        gap: 16px;
+    }
 }
 
