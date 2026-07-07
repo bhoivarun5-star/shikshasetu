@@ -893,6 +893,10 @@
         gap: 8px;
     }
 
+    .logo-btn {
+        margin-left: 0;
+    }
+
     .header-actions {
         gap: 6px;
     }
